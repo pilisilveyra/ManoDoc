@@ -1,0 +1,16 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+
+.flex-container{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh /* Permite que la imagen ocupe toda la pantalla*/
+
+
+}
