@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 from app import create_app
 from app.extensions import db
-from app.models.temperatura import Temperatura
+from app.models.Temperatura import Temperatura
 
 app = create_app()
 
