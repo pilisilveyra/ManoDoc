@@ -1,0 +1,4 @@
+
+
+SQLALCHEMY_DATABASE_URI = 'mysql://manodoc:manopass@172.31.2.43:3306/manodoc'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
