@@ -19,7 +19,7 @@ def create_app():
 
     @app.route('/')
     def home():
-        return render_template('home.html', active_page='home')
+        return render_template('login.html')
 
     @app.route('/turnos')
     def turnos():
