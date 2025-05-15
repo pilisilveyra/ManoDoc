@@ -12,6 +12,7 @@ def create_app():
 
     with app.app_context():
         from app.models.usuario import Usuario
+        from app.models.temperatura import Temperatura
         db.create_all()
 
 
@@ -34,5 +35,11 @@ def create_app():
     @app.route('/contact')
     def contact():
         return render_template('contact.html', active_page='contact')
+
+    @app.route('/temperaturas')
+    def temperaturas():
+        from app.models.temperatura import Temperatura
+        datos = Temperatura.query.order_by(Temperatura.timestamp.desc()).limit(20).all()
+        return render_template('temperaturas.html', temperaturas=datos)
 
     return app
