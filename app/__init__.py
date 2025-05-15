@@ -12,6 +12,8 @@ def create_app():
 
     with app.app_context():
         from app.models.Temperatura import Temperatura
+        from app.models.Paciente import Paciente
+        from app.models.Doctor import Doctor
         db.create_all()
 
 
