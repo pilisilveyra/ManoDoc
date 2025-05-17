@@ -35,7 +35,7 @@
         </select>
 
         <!-- Formulario de Paciente -->
-        <form id="form-paciente" class="hidden" method="POST" action="{{ url_for('registrar_paciente') }}">
+        <form id="form-paciente" class="hidden" method="POST" action="{{ url_for('register_bp.registrar_paciente') }}">
             <label>Nombre:</label><input type="text" name="nombre" required>
             <label>Apellido:</label><input type="text" name="apellido" required>
             <label>Email:</label><input type="email" name="email" required>
@@ -45,7 +45,7 @@
         </form>
 
         <!-- Formulario de Doctor -->
-        <form id="form-doctor" class="hidden" method="POST" action="{{ url_for('registrar_doctor') }}">
+        <form id="form-doctor" class="hidden" method="POST" action="{{ url_for('register_bp.registrar_doctor') }}">
             <label>Nombre:</label><input type="text" name="nombre" required>
             <label>Apellido:</label><input type="text" name="apellido" required>
             <label>Email:</label><input type="email" name="email" required>

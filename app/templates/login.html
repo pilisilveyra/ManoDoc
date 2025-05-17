@@ -15,7 +15,7 @@
 <body>
     <div class="login-container">
         <h2>Iniciar sesión</h2>
-        <form method="POST" action="{{ url_for('login') }}">
+        <form method="POST" action="{{ url_for('login_bp.login') }}">
             <label>Email:</label>
             <input type="email" name="email" required>
 
@@ -25,7 +25,8 @@
             <button type="submit">Ingresar</button>
         </form>
 
-        <a href="{{ url_for('mostrar_register') }}">¿No tenés cuenta? Registrate</a>
+        <a href="{{ url_for('register_view') }}">¿No tenés cuenta? Registrate</a>
+
     </div>
 </body>
 </html>
