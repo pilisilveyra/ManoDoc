@@ -3,6 +3,8 @@ pymysql.install_as_MySQLdb()
 
 from flask import Flask, render_template
 from app.extensions import db
+from app.routes.register import register_bp
+from app.routes.login import login_bp
 
 def create_app():
     app = Flask(__name__)
@@ -16,10 +18,16 @@ def create_app():
         from app.models.Doctor import Doctor
         db.create_all()
 
+    app.register_blueprint(register_bp)
+    app.register_blueprint(login_bp)
 
     @app.route('/')
     def home():
         return render_template('login.html')
+
+    @app.route('/register')
+    def home():
+        return render_template('register.html')
 
     @app.route('/turnos')
     def turnos():

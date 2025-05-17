@@ -1,0 +1,59 @@
+<!-- templates/register.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5; }
+        .form-container { background-color: white; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        label { display: block; margin-top: 10px; }
+        input, select, button { width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
+        .hidden { display: none; }
+    </style>
+    <script>
+        function toggleForm() {
+            const tipo = document.getElementById("tipo_usuario").value;
+            document.getElementById("form-doctor").classList.add("hidden");
+            document.getElementById("form-paciente").classList.add("hidden");
+            if (tipo === "doctor") {
+                document.getElementById("form-doctor").classList.remove("hidden");
+            } else if (tipo === "paciente") {
+                document.getElementById("form-paciente").classList.remove("hidden");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Registrarse</h2>
+        <label for="tipo_usuario">Registrarse como:</label>
+        <select id="tipo_usuario" onchange="toggleForm()">
+            <option value="">Seleccione...</option>
+            <option value="paciente">Paciente</option>
+            <option value="doctor">Doctor</option>
+        </select>
+
+        <!-- Formulario de Paciente -->
+        <form id="form-paciente" class="hidden" method="POST" action="{{ url_for('registrar_paciente') }}">
+            <label>Nombre:</label><input type="text" name="nombre" required>
+            <label>Apellido:</label><input type="text" name="apellido" required>
+            <label>Email:</label><input type="email" name="email" required>
+            <label>Contraseña:</label><input type="password" name="contrasena" required>
+            <label>DNI:</label><input type="text" name="dni" required>
+            <button type="submit">Registrarse como Paciente</button>
+        </form>
+
+        <!-- Formulario de Doctor -->
+        <form id="form-doctor" class="hidden" method="POST" action="{{ url_for('registrar_doctor') }}">
+            <label>Nombre:</label><input type="text" name="nombre" required>
+            <label>Apellido:</label><input type="text" name="apellido" required>
+            <label>Email:</label><input type="email" name="email" required>
+            <label>Contraseña:</label><input type="password" name="contrasena" required>
+            <label>DNI:</label><input type="text" name="dni" required>
+            <label>Especialidad:</label><input type="text" name="especialidad" required>
+            <button type="submit">Registrarse como Doctor</button>
+        </form>
+    </div>
+</body>
+</html>

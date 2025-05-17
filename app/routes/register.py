@@ -1,0 +1,38 @@
+from flask import Blueprint, request, redirect, url_for
+from app.extensions import db
+from app.models.Paciente import Paciente
+from app.models.Doctor import Doctor
+from werkzeug.security import generate_password_hash
+
+register_bp = Blueprint('register_bp', __name__)
+
+@register_bp.route('/registrar_paciente', methods=['POST'])
+def registrar_paciente():
+    hashed_password = generate_password_hash(request.form['contrasena'])
+
+    nuevo = Paciente(
+        nombre=request.form['nombre'],
+        apellido=request.form['apellido'],
+        email=request.form['email'],
+        contrasena=hashed_password,
+        dni=request.form['dni']
+    )
+
+    db.session.add(nuevo)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+@register_bp.route('/registrar_doctor', methods=['POST'])
+def registrar_doctor():
+    hashed_password = generate_password_hash(request.form['contrasena'])
+    nuevo = Doctor(
+        nombre=request.form['nombre'],
+        apellido=request.form['apellido'],
+        email=request.form['email'],
+        contrasena=hashed_password,
+        dni=request.form['dni'],
+        especialidad=request.form['especialidad']
+    )
+    db.session.add(nuevo)
+    db.session.commit()
+    return redirect(url_for('home'))

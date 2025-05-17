@@ -1,10 +1,31 @@
+<!-- templates/login.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Iniciar sesión</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; padding: 40px; }
+        .login-container { background: white; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        label, input { display: block; width: 100%; margin-top: 10px; }
+        button { margin-top: 15px; padding: 10px; width: 100%; border: none; background-color: #4CAF50; color: white; border-radius: 4px; cursor: pointer; }
+        a { display: block; text-align: center; margin-top: 15px; color: #4CAF50; text-decoration: none; }
+    </style>
 </head>
 <body>
+    <div class="login-container">
+        <h2>Iniciar sesión</h2>
+        <form method="POST" action="{{ url_for('login') }}">
+            <label>Email:</label>
+            <input type="email" name="email" required>
 
+            <label>Contraseña:</label>
+            <input type="password" name="contrasena" required>
+
+            <button type="submit">Ingresar</button>
+        </form>
+
+        <a href="{{ url_for('mostrar_register') }}">¿No tenés cuenta? Registrate</a>
+    </div>
 </body>
 </html>
