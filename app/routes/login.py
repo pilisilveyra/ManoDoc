@@ -2,7 +2,6 @@ from flask import Blueprint, request, redirect, url_for, render_template, sessio
 from app.models.Paciente import Paciente
 from app.models.Doctor import Doctor
 from werkzeug.security import check_password_hash
-
 login_bp = Blueprint('login_bp', __name__)
 
 @login_bp.route('/login', methods=['GET', 'POST'])

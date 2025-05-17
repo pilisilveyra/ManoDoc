@@ -22,11 +22,11 @@ def create_app():
     app.register_blueprint(login_bp)
 
     @app.route('/')
-    def home():
+    def login_view():
         return render_template('login.html')
 
     @app.route('/register')
-    def home():
+    def register_view():
         return render_template('register.html')
 
     @app.route('/turnos')
