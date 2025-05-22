@@ -1,4 +1,5 @@
 import pymysql
+pymysql.install_as_MySQLdb()
 
 from flask import Flask, render_template
 from app.extensions import db
@@ -52,3 +53,4 @@ def create_app():
         return render_template('temperaturas.html', temperaturas=datos)
 
     return app
+2
