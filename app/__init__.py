@@ -5,11 +5,12 @@ from flask import Flask, render_template
 from app.extensions import db
 from app.routes.register import register_bp
 from app.routes.login import login_bp
+import os
 
 def create_app():
     app = Flask(__name__,
-                template_folder='app/templates',
-                static_folder='app/static')
+                template_folder=os.path.join(os.path.dirname(__file__), 'templates'),
+                static_folder=os.path.join(os.path.dirname(__file__), 'static'))
 
     app.config.from_object('app.config')
 
