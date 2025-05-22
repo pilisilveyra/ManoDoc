@@ -10,6 +10,8 @@ import os
 def create_app():
     app = Flask(__name__)
 
+    app.secret_key = os.environ.get('SECRET_KEY', 'clave-secreta-default')
+
     app.config.from_object('app.config')
 
     db.init_app(app)
