@@ -24,7 +24,7 @@ def registrar_paciente():
 
     db.session.add(nuevo)
     db.session.commit()
-    return redirect(url_for('home'))
+    return render_template("home.html")
 
 @register_bp.route('/registrar_doctor', methods=['POST'])
 def registrar_doctor():
@@ -39,4 +39,4 @@ def registrar_doctor():
     )
     db.session.add(nuevo)
     db.session.commit()
-    return redirect(url_for('home'))
+    return render_template("home.html")
