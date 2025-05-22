@@ -1,16 +1,14 @@
 import pymysql
 pymysql.install_as_MySQLdb()
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from app.extensions import db
 from app.routes.register import register_bp
 from app.routes.login import login_bp
 import os
 
 def create_app():
-    app = Flask(__name__,
-                template_folder=os.path.join(os.path.dirname(__file__), 'templates'),
-                static_folder=os.path.join(os.path.dirname(__file__), 'static'))
+    app = Flask(__name__)
 
     app.config.from_object('app.config')
 
@@ -22,8 +20,9 @@ def create_app():
     app.register_blueprint(register_bp)
     app.register_blueprint(login_bp)
 
+
     @app.route('/')
-    def login_view():
+    def index():
         return render_template('login.html')
 
     @app.route('/register')
@@ -53,4 +52,4 @@ def create_app():
         return render_template('temperaturas.html', temperaturas=datos)
 
     return app
-2
+

@@ -2,9 +2,10 @@ from flask import Blueprint, request, redirect, url_for, render_template, sessio
 from app.models.Paciente import Paciente
 from app.models.Doctor import Doctor
 from werkzeug.security import check_password_hash
+
 login_bp = Blueprint('login_bp', __name__)
 
-@login_bp.route('/login', methods=['GET', 'POST'])
+@login_bp.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
@@ -15,7 +16,7 @@ def login():
         if paciente and check_password_hash(paciente.contrasena, contrasena):
             session['usuario_id'] = paciente.id_paciente
             session['tipo'] = 'paciente'
-            return redirect(url_for('home'))  # o redirigir a panel de paciente
+            return render_template('home.html')
 
         # Buscar en Doctores
         doctor = Doctor.query.filter_by(email=email).first()
@@ -26,6 +27,4 @@ def login():
 
         flash('Email o contraseña incorrectos')
         return redirect(url_for('login_bp.login'))
-
-    return render_template('login.html')
 
