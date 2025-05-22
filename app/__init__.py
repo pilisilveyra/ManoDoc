@@ -7,16 +7,15 @@ from app.routes.register import register_bp
 from app.routes.login import login_bp
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__,
+                template_folder='app/templates',
+                static_folder='app/static')
 
     app.config.from_object('app.config')
 
     db.init_app(app)
 
     with app.app_context():
-        from app.models.Temperatura import Temperatura
-        from app.models.Paciente import Paciente
-        from app.models.Doctor import Doctor
         db.create_all()
 
     app.register_blueprint(register_bp)
