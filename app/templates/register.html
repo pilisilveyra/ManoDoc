@@ -4,13 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5; }
-        .form-container { background-color: white; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        label { display: block; margin-top: 10px; }
-        input, select, button { width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
-        .hidden { display: none; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
     <script>
         function toggleForm() {
             const tipo = document.getElementById("tipo_usuario").value;
@@ -34,7 +28,7 @@
             <option value="doctor">Doctor</option>
         </select>
 
-        <!-- Formulario de Paciente -->
+        <!-- Paciente -->
         <form id="form-paciente" class="hidden" method="POST" action="{{ url_for('register_bp.registrar_paciente') }}">
             <label>Nombre:</label><input type="text" name="nombre" required>
             <label>Apellido:</label><input type="text" name="apellido" required>
@@ -44,7 +38,7 @@
             <button type="submit">Registrarse como Paciente</button>
         </form>
 
-        <!-- Formulario de Doctor -->
+        <!-- Doctor -->
         <form id="form-doctor" class="hidden" method="POST" action="{{ url_for('register_bp.registrar_doctor') }}">
             <label>Nombre:</label><input type="text" name="nombre" required>
             <label>Apellido:</label><input type="text" name="apellido" required>
