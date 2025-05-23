@@ -35,7 +35,8 @@ def registrar_doctor():
         email=request.form['email'],
         contrasena=hashed_password,
         dni=request.form['dni'],
-        especialidad=request.form['especialidad']
+        especialidad=request.form['especialidad'],
+        foto=request.form['foto']
     )
     db.session.add(nuevo)
     db.session.commit()
