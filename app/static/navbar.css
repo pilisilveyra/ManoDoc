@@ -6,16 +6,16 @@
   background-color: #f8f9f8;
   padding: 10px 30px;
   border-bottom: 1px solid #d9e0dc;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Logo y nombre */
-.navbar-left {
+/* Logo */
+.logo {
   display: flex;
   align-items: center;
 }
 
-.logo {
+.logo img {
   height: 40px;
   margin-right: 10px;
 }
@@ -27,19 +27,23 @@
 }
 
 /* Links */
+.navbar-links {
+  display: flex;
+  gap: 25px;
+}
+
 .navbar-links a {
   text-decoration: none;
-  color: #4c5c68;
-  margin-left: 25px;
+  color: #00b8b8; /* Turquesa */
   font-size: 1rem;
   font-weight: 500;
-  transition: color 0.2s;
+  transition: all 0.2s;
 }
 
 .navbar-links a:hover,
 .navbar-links a.active {
-  color: #2b7a78;
+  color: #007f7f;
   font-weight: bold;
-  border-bottom: 2px solid #2b7a78;
-  padding-bottom: 3px;
+  border-bottom: 2px solid #007f7f;
+  padding-bottom: 2px;
 }
