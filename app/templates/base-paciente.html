@@ -1,0 +1,12 @@
+<nav class="navbar">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo-manodoc.png') }}" alt="Logo">
+        <span>MANODOC</span>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{{ url_for('paciente_bp.home_paciente') }}" class="{% if active_page == 'home' %}active{% endif %}">HOME</a></li>
+        <li><a href="{{ url_for('paciente_bp.turnos_paciente') }}" class="{% if active_page == 'turnos' %}active{% endif %}">TURNOS</a></li>
+        <li><a href="{{ url_for('paciente_bp.historial_paciente') }}" class="{% if active_page == 'historial' %}active{% endif %}">HISTORIAL</a></li>
+        <li><a href="{{ url_for('paciente_bp.perfil_paciente') }}" class="{% if active_page == 'perfil' %}active{% endif %}">PERFIL</a></li>
+    </ul>
+</nav>

@@ -1,0 +1,56 @@
+.home-paciente {
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+}
+
+.home-paciente h2 {
+    color: #4cae9b;
+    margin-bottom: 1.5rem;
+}
+
+.turnos-proximos, .acciones-rapidas {
+    margin-top: 2rem;
+}
+
+.turno-card {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.turno-card p {
+    margin: 5px 0;
+}
+
+.btn-ingresar {
+    display: inline-block;
+    background-color: #4cae9b;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.acciones-rapidas .botones {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-acceso {
+    background-color: #4cae9b;
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-acceso:hover {
+    background-color: #3c9a89;
+}

@@ -1,0 +1,38 @@
+{% extends "base-paciente.html" %}
+
+{% block content %}
+
+<div class='home-paciente'>
+
+    <h2> Bienvenido, {{paciente.nombre}} {{paciente.apellido}}  </h2>
+
+    <section class="turnos-proximos">
+        <h3>Tus proximos turnos</h3>
+        {% if turnos %}
+            {% for turno in turnos %}
+                <div class="turno-card">
+                    <p><strong>Profesional:</strong> Dr/a {{ turno.doctor_nombre }}</p>
+                    <p><strong>Especialidad:</strong> {{ turno.especialidad }}</p>
+                    <p><strong>Fecha:</strong> {{ turno.fecha }} - {{ turno.hora }}</p>
+                    <p><strong>Modalidad:</strong> {{ turno.modalidad }}</p>
+                    {% if turno.link %}
+                        <p>Ingresar a la consulta</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No tenés turnos programados.</p>
+        {% endif %}
+    </section>
+
+    <section class="acciones-rapidas">
+        <h3>Accesos rápidos</h3>
+        <div class="botones">
+            <a href="{{ url_for('paciente_bp.historial_paciente') }}" class="btn-acceso">Ver Historial</a>
+            <a href="{{ url_for('paciente_bp.turnos_paciente') }}" class="btn-acceso">Ver Turnos</a>
+            <a href="{{ url_for('paciente_bp.perfil_paciente') }}" class="btn-acceso">Mi Perfil</a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

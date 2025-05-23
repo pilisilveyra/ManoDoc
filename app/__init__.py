@@ -1,10 +1,15 @@
 import pymysql
+
+from app.models.Doctor import Doctor
+from app.models.Paciente import Paciente
+
 pymysql.install_as_MySQLdb()
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, session
 from app.extensions import db
 from app.routes.register import register_bp
 from app.routes.login import login_bp
+from app.routes.paciente import paciente_bp
 import os
 
 def create_app():
@@ -21,31 +26,27 @@ def create_app():
 
     app.register_blueprint(register_bp)
     app.register_blueprint(login_bp)
+    app.register_blueprint(paciente_bp)
+
+    @app.context_processor
+    def inject_paciente():
+        if 'usuario_id' in session and session.get('tipo') == 'paciente':
+            paciente = Paciente.query.get(session['usuario_id'])
+            return dict(paciente=paciente)
+        return {}
+
+    @app.context_processor
+    def inject_doctor():
+        if 'usuario_id' in session and session.get('tipo') == 'doctor':
+            doctor = Doctor.query.get(session['usuario_id'])
+            return dict(doctor=doctor)
+        return {}
 
 
     @app.route('/')
     def index():
         return render_template('login.html')
 
-    @app.route('/register')
-    def register_view():
-        return render_template('register.html')
-
-    @app.route('/turnos')
-    def turnos():
-        return render_template('turnos.html', active_page='turnos')
-
-    @app.route('/historial')
-    def historial():
-        return render_template('historial.html', active_page='historial')
-
-    @app.route('/perfil')
-    def perfil():
-        return render_template('perfil.html', active_page='perfil')
-
-    @app.route('/contact')
-    def contact():
-        return render_template('contact.html', active_page='contact')
 
     @app.route('/temperaturas')
     def temperaturas():
