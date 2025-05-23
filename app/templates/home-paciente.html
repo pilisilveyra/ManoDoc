@@ -1,30 +1,55 @@
-{% extends "base-paciente.html" %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Manodoc - Home Paciente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home-paciente.css') }}">
+</head>
+<body>
 
-{% block content %}
+<div class="home-container">
 
-<div class='home-paciente'>
+    <!-- IMAGEN DE MANODOC -->
+    <div class="imagen-descripcion">
+        <img src="{{ url_for('static', filename='manodoc.JPG') }}" alt="Manodoc" class="main-image">
+        
+        <div class="descripcion-boton">
+            <p class="descripcion">
+                Manodoc presenta su nuevo lanzamiento. Una mano robótica, capaz de imitar el comportamiento de los mejores profesionales,
+                ofreciéndole a pacientes alrededor de todo el mundo la posibilidad de ser tratados por médicos de todas las especialidades
+                sin necesidad de recurrir de forma presencial.
+            </p>
 
-    <h2> Bienvenido, {{paciente.nombre}} {{paciente.apellido}}  </h2>
+            <a href="{{ url_for('turnos.sacar_turno') }}" class="boton-turno">Sacar Turno</a>
+        </div>
+    </div>
 
-    <section class="turnos-proximos">
-        <h3>Tus proximos turnos</h3>
-        {% if turnos %}
-            {% for turno in turnos %}
-                <div class="turno-card">
-                    <p><strong>Profesional:</strong> Dr/a {{ turno.doctor_nombre }}</p>
-                    <p><strong>Especialidad:</strong> {{ turno.especialidad }}</p>
-                    <p><strong>Fecha:</strong> {{ turno.fecha }} - {{ turno.hora }}</p>
-                    <p><strong>Modalidad:</strong> {{ turno.modalidad }}</p>
-                    {% if turno.link %}
-                        <p>Ingresar a la consulta</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No tenés turnos programados.</p>
-        {% endif %}
-    </section>
-
+    <!-- CARDS DE PROFESIONALES -->
+    <div class="profesionales-section" id="profesionales-container">
+        <!-- Cards se agregan dinámicamente aquí -->
+    </div>
 
 </div>
-{% endblock %}
+
+<script>
+    // Cargar doctores dinámicamente
+    fetch('/doctors')
+        .then(response => response.json())
+        .then(doctores => {
+            const contenedor = document.getElementById('profesionales-container');
+            doctores.forEach(doc => {
+                const card = document.createElement('div');
+                card.className = 'card-profesional';
+
+                card.innerHTML = `
+                    <img src="${doc.imagen_url}" alt="Foto de ${doc.nombre}" class="foto-doctor">
+                    <h3>${doc.nombre} ${doc.apellido}</h3>
+                    <p>${doc.especialidad}</p>
+                `;
+                contenedor.appendChild(card);
+            });
+        });
+</script>
+
+</body>
+</html>

@@ -10,5 +10,6 @@ class Doctor(db.Model):
     contrasena = db.Column(db.String(256), nullable=False)
     dni = db.Column(db.String(8), unique=True, nullable=False)
     especialidad = db.Column(db.String(120), nullable=False)
+    imagen_url = db.Column(db.String(255))
 
 

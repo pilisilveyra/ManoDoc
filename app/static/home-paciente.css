@@ -1,56 +1,86 @@
-.home-paciente {
-    padding: 2rem;
+body {
     font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
 }
 
-.home-paciente h2 {
-    color: #4cae9b;
-    margin-bottom: 1.5rem;
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
 }
 
-.turnos-proximos, .acciones-rapidas {
-    margin-top: 2rem;
+.imagen-descripcion {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.turno-card {
-    border: 1px solid #ccc;
-    padding: 1rem;
+.main-image {
+    max-width: 500px;
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.descripcion-boton {
+    max-width: 400px;
+}
+
+.descripcion {
+    font-size: 1.1rem;
+    color: #333;
     margin-bottom: 1rem;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.turno-card p {
-    margin: 5px 0;
-}
-
-.btn-ingresar {
+.boton-turno {
     display: inline-block;
-    background-color: #4cae9b;
+    padding: 0.8rem 1.5rem;
+    background-color: #2d6a4f;
     color: white;
-    padding: 0.5rem 1rem;
     text-decoration: none;
-    border-radius: 5px;
-    margin-top: 10px;
+    border-radius: 8px;
+    font-weight: bold;
 }
 
-.acciones-rapidas .botones {
+.boton-turno:hover {
+    background-color: #1b4332;
+}
+
+.profesionales-section {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.btn-acceso {
-    background-color: #4cae9b;
-    color: white;
-    padding: 0.75rem 1.25rem;
+.card-profesional {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 180px;
+}
+
+.card-profesional img.foto-doctor {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
     border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    margin-bottom: 0.5rem;
 }
 
-.btn-acceso:hover {
-    background-color: #3c9a89;
+.card-profesional h3 {
+    font-size: 1rem;
+    margin: 0.2rem 0;
+}
+
+.card-profesional p {
+    font-size: 0.9rem;
+    color: #555;
 }
