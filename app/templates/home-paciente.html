@@ -21,18 +21,10 @@
                 </div>
             {% endfor %}
         {% else %}
-            <h1>No tenés turnos programados.</h1>
+            <p>No tenés turnos programados.</p>
         {% endif %}
     </section>
 
-    <section class="acciones-rapidas">
-        <h3>Accesos rápidos</h3>
-        <div class="botones">
-            <a href="{{ url_for('paciente_bp.historial_paciente') }}" class="btn-acceso">Ver Historial</a>
-            <a href="{{ url_for('paciente_bp.turnos_paciente') }}" class="btn-acceso">Ver Turnos</a>
-            <a href="{{ url_for('paciente_bp.perfil_paciente') }}" class="btn-acceso">Mi Perfil</a>
-        </div>
-    </section>
 
 </div>
 {% endblock %}

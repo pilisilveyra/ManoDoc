@@ -12,7 +12,7 @@ def home_paciente():
     if 'usuario_id' in session and session['tipo'] == 'paciente':
         paciente = Paciente.query.get(session['usuario_id'])
         turnos = Turno.query.filter_by(id_paciente=paciente.id_paciente).filter(Turno.fecha >= date.today()).all()
-        return render_template('home-paciente.html', turnos=turnos)
+        return render_template('home-paciente.html', paciente=paciente, turnos=turnos, active_page='home')
     else:
         return render_template('login.html')
 
