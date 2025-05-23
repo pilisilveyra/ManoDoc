@@ -1,44 +1,45 @@
+/* Estilo base para la barra */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    border-bottom: 1px solid #ccc;
-    padding: 1rem 2rem;
-    font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9f8;
+  padding: 10px 30px;
+  border-bottom: 1px solid #d9e0dc;
+  font-family: Arial, sans-serif;
+}
+
+/* Logo y nombre */
+.navbar-left {
+  display: flex;
+  align-items: center;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
+  height: 40px;
+  margin-right: 10px;
 }
 
-.logo img {
-    height: 40px;
-    margin-right: 10px;
+.brand {
+  font-size: 1.5rem;
+  color: #2b7a78;
+  font-weight: bold;
 }
 
-.logo span {
-    color: #4cae9b;
-    font-weight: bold;
-    font-size: 1.5rem;
+/* Links */
+.navbar-links a {
+  text-decoration: none;
+  color: #4c5c68;
+  margin-left: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s;
 }
 
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #6c757d;
-    font-weight: bold;
-}
-
-.nav-links a.active,
-.nav-links a:hover {
-    color: #4cae9b;
-    border-bottom: 2px solid #4cae9b;
-    padding-bottom: 5px;
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: #2b7a78;
+  font-weight: bold;
+  border-bottom: 2px solid #2b7a78;
+  padding-bottom: 3px;
 }
