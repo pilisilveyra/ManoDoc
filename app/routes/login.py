@@ -35,5 +35,5 @@ def login():
 @login_bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('login_bp.login'))
+    return redirect(url_for('app.index'))
 
