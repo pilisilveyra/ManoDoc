@@ -25,7 +25,17 @@ def historial_paciente():
 
 @paciente_bp.route('/turnos-paciente')
 def turnos_paciente():
-    return render_template('turnos-paciente.html')
+    if 'usuario_id' in session and session['tipo'] == 'paciente':
+        paciente = Paciente.query.get(session['usuario_id'])
+
+        turnos = Turno.query.filter_by(id_paciente=paciente.id_paciente).order_by(Turno.fecha, Turno.hora).all()
+
+        doctores = Doctor.query.all()
+
+        return render_template('turnos-paciente.html', paciente=paciente, turnos=turnos, doctores=doctores, active_page='turnos')
+    else:
+        return redirect(url_for('login_bp.login'))
+
 
 @paciente_bp.route('/perfil-paciente')
 def perfil_paciente():
