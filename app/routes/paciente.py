@@ -1,9 +1,11 @@
-from datetime import date
+from datetime import date, datetime
 
 from flask import Blueprint, request, redirect, url_for, render_template, session, flash
 
+from app import db
 from app.models.Paciente import Paciente
 from app.models.Turno import Turno
+from app.models.Doctor import Doctor
 
 paciente_bp = Blueprint('paciente_bp', __name__, template_folder='templates')
 
@@ -30,4 +32,36 @@ def perfil_paciente():
     return render_template('perfil-paciente.html')
 
 
+@paciente_bp.route('/nuevo-turno')
+def nuevo_turno():
+    if 'usuario_id' in session and session['tipo'] == 'paciente':
+        doctores = Doctor.query.all()
+        return render_template('nuevo-turno.html', doctores=doctores, active_page='turnos')
+    return redirect(url_for('login_bp.login'))
 
+@paciente_bp.route('/crear-turno', methods=['POST'])
+def crear_turno():
+    if 'usuario_id' in session and session['tipo'] == 'paciente':
+        id_paciente = session['usuario_id']
+        id_doctor = request.form['id_doctor']
+        fecha = request.form['fecha']
+        hora = request.form['hora']
+
+        turno = Turno(
+            id_paciente=id_paciente,
+            id_doctor=id_doctor,
+            fecha=datetime.strptime(fecha, "%Y-%m-%d").date(),
+            hora=datetime.strptime(hora, "%H:%M").time()
+        )
+        db.session.add(turno)
+        db.session.commit()
+
+        return redirect(url_for('paciente_bp.turnos_paciente'))
+    return redirect(url_for('login_bp.login'))
+
+@paciente_bp.route('/cancelar-turno/<int:id_turno>', methods=['POST'])
+def cancelar_turno(id_turno):
+    turno = Turno.query.get(id_turno)
+    db.session.delete(turno)
+    db.session.commit()
+    return redirect(url_for('paciente_bp.turnos_paciente'))
