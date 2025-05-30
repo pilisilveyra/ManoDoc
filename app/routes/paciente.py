@@ -23,19 +23,32 @@ def home_paciente():
 def historial_paciente():
     return render_template('historial-paciente.html')
 
+from datetime import datetime, date, time
+
 @paciente_bp.route('/turnos-paciente')
 def turnos_paciente():
     if 'usuario_id' in session and session['tipo'] == 'paciente':
         paciente = Paciente.query.get(session['usuario_id'])
 
-        turnos = Turno.query.filter_by(id_paciente=paciente.id_paciente).order_by(Turno.fecha, Turno.hora).all()
+        ahora = datetime.now()
+
+        # Traer todos los turnos del paciente
+        turnos = Turno.query.filter_by(id_paciente=paciente.id_paciente).all()
+
+        # Filtrar solo los futuros (fecha y hora juntos)
+        turnos_futuros = [
+            turno for turno in turnos
+            if datetime.combine(turno.fecha, turno.hora) >= ahora
+        ]
 
         doctores = Doctor.query.all()
 
-        return render_template('turnos-paciente.html', paciente=paciente, turnos=turnos, doctores=doctores, active_page='turnos')
-    else:
-        return redirect(url_for('login_bp.login'))
-
+        return render_template('turnos-paciente.html',
+                               paciente=paciente,
+                               turnos=turnos_futuros,
+                               doctores=doctores,
+                               active_page='turnos')
+    return redirect(url_for('login_bp.login'))
 
 @paciente_bp.route('/perfil-paciente')
 def perfil_paciente():
