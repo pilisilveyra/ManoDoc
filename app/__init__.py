@@ -10,6 +10,7 @@ from app.extensions import db
 from app.routes.register import register_bp
 from app.routes.login import login_bp
 from app.routes.paciente import paciente_bp
+from app.routes.doctor import doctor_bp
 import os
 
 def create_app():
@@ -27,6 +28,7 @@ def create_app():
     app.register_blueprint(register_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(paciente_bp)
+    app.register_blueprint(doctor_bp)
 
     @app.context_processor
     def inject_paciente():

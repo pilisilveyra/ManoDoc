@@ -17,7 +17,7 @@ def get_doctors():
             'nombre': doctor.nombre,
             'apellido': doctor.apellido,
             'especialidad': doctor.especialidad,
-            'imagen_url': doctor.imagen_url
+            'imagen_url': doctor.foto
         }
         for doctor in doctors
     ])
