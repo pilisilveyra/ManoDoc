@@ -13,7 +13,7 @@ def get_doctors():
     doctors = Doctor.query.all()
     return jsonify([
         {
-            'id': doctor.id,
+            'id': doctor.id_doctor,
             'nombre': doctor.nombre,
             'apellido': doctor.apellido,
             'especialidad': doctor.especialidad,
