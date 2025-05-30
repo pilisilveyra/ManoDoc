@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base-paciente.html" %}
 
-</body>
-</html>
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='perfil-paciente.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="perfil-container">
+    <div class="perfil-header">
+        <img class="perfil-foto" src="{{ paciente.foto }}" alt="Foto de {{ paciente.nombre }}">
+        <div class="perfil-nombre">
+            <h2>{{ paciente.nombre }} {{ paciente.apellido }}</h2>
+        </div>
+    </div>
+
+    <div class="perfil-info">
+        <div class="info-box">
+            <p><strong>Teléfono</strong> <span>{{ paciente.telefono }}</span></p>
+            <p><strong>Correo electrónico</strong> <span>{{ paciente.email }}</span></p>
+            <p><strong>Cobertura</strong> <span>{{ paciente.cobertura }}</span></p>
+        </div>
+    </div>
+
+    <div class="cerrar-sesion">
+        <a href="{{ url_for('login_bp.logout') }}">🔒 Cerrar Sesión</a>
+    </div>
+</div>
+{% endblock %}

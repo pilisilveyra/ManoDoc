@@ -17,9 +17,12 @@ def registrar_paciente():
     nuevo = Paciente(
         nombre=request.form['nombre'],
         apellido=request.form['apellido'],
+        telefono=request.form['telefono'],
         email=request.form['email'],
         contrasena=hashed_password,
-        dni=request.form['dni']
+        dni=request.form['dni'],
+        cobertura=request.form['cobertura'],
+        foto=request.form['foto']
     )
 
     db.session.add(nuevo)

@@ -30,13 +30,16 @@
 
         <!-- Paciente -->
         <form id="form-paciente" class="hidden" method="POST" action="{{ url_for('register_bp.registrar_paciente') }}">
-            <label>Nombre:</label><input type="text" name="nombre" required>
-            <label>Apellido:</label><input type="text" name="apellido" required>
-            <label>Email:</label><input type="email" name="email" required>
-            <label>Contraseña:</label><input type="password" name="contrasena" required>
-            <label>DNI:</label><input type="text" name="dni" required>
-            <button type="submit">Registrarse como Paciente</button>
-        </form>
+    <label>Nombre:</label><input type="text" name="nombre" required>
+    <label>Apellido:</label><input type="text" name="apellido" required>
+    <label>Teléfono:</label><input type="text" name="telefono" required>
+    <label>Correo electrónico:</label><input type="email" name="email" required>
+    <label>Contraseña:</label><input type="password" name="contrasena" required>
+    <label>DNI:</label><input type="text" name="dni" required>
+    <label>Cobertura:</label><input type="text" name="cobertura" required>
+    <label>Foto:</label><input type="text" name="foto" required>
+    <button type="submit">Registrarse como Paciente</button>
+</form>
 
         <!-- Doctor -->
         <form id="form-doctor" class="hidden" method="POST" action="{{ url_for('register_bp.registrar_doctor') }}">

@@ -31,3 +31,9 @@ def login():
 
         flash('Email o contraseña incorrectos')
         return render_template('login.html')
+
+@login_bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login_bp.login'))
+

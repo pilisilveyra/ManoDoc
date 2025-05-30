@@ -52,8 +52,10 @@ def turnos_paciente():
 
 @paciente_bp.route('/perfil-paciente')
 def perfil_paciente():
-    return render_template('perfil-paciente.html')
-
+    if 'usuario_id' in session and session.get('tipo') == 'paciente':
+        paciente = Paciente.query.get(session['usuario_id'])
+        return render_template('perfil-paciente.html', paciente=paciente, active_page='perfil')
+    return redirect(url_for('login_bp.login'))
 
 @paciente_bp.route('/nuevo-turno')
 def nuevo_turno():
