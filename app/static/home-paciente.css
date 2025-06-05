@@ -1,0 +1,98 @@
+/* Estructura general */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Imagen + descripción */
+.imagen-descripcion {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.main-image {
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.descripcion-boton {
+    max-width: 400px;
+}
+
+.descripcion {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.boton-turno {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: #2d6a4f;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.boton-turno:hover {
+    background-color: #1b4332;
+}
+
+/* Cards de doctores */
+.profesionales-section {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card-profesional {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 180px;
+    transition: transform 0.2s ease;
+}
+
+.card-profesional:hover {
+    transform: translateY(-5px);
+}
+
+.card-profesional img.foto-doctor {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.card-profesional h3 {
+    font-size: 1rem;
+    margin: 0.2rem 0;
+    color: #1b4332;
+    text-transform: capitalize;
+}
+
+.card-profesional p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}

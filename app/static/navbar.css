@@ -1,0 +1,49 @@
+/* Estilo base para la barra */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9f8;
+  padding: 10px 30px;
+  border-bottom: 1px solid #d9e0dc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.brand {
+  font-size: 1.5rem;
+  color: #2b7a78;
+  font-weight: bold;
+}
+
+/* Links */
+.navbar-links {
+  display: flex;
+  gap: 25px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #00b8b8; /* Turquesa */
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: #007f7f;
+  font-weight: bold;
+  border-bottom: 2px solid #007f7f;
+  padding-bottom: 2px;
+}

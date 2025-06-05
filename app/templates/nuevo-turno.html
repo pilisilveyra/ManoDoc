@@ -1,0 +1,27 @@
+{% extends "base-paciente.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='nuevo-turno.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="nuevo-turno-container">
+    <h2>Solicitar Nuevo Turno</h2>
+    <form method="POST" action="{{ url_for('paciente_bp.crear_turno') }}">
+    <label for="doctor">Seleccionar Doctor:</label>
+    <select id="doctor" name="id_doctor" required>
+        {% for doctor in doctores %}
+            <option value="{{ doctor.id_doctor }}">{{ doctor.nombre }} {{ doctor.apellido }} - {{ doctor.especialidad }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha" name="fecha" required>
+
+    <label for="hora">Hora:</label>
+    <input type="time" id="hora" name="hora" required>
+
+    <button type="submit">Confirmar Turno</button>
+</form>
+</div>
+{% endblock %}

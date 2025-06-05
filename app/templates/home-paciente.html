@@ -1,0 +1,52 @@
+<!-- templates/home-paciente.html -->
+{% extends "base-paciente.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='home-paciente.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="home-container">
+
+    <!-- IMAGEN DE MANODOC -->
+    <div class="imagen-descripcion">
+        <img src="{{ url_for('static', filename='manodoc.JPG') }}" alt="Manodoc" class="main-image">
+
+        <div class="descripcion-boton">
+            <p class="descripcion">
+                Manodoc presenta su nuevo lanzamiento. Una mano robótica, capaz de imitar el comportamiento de los mejores profesionales,
+                ofreciéndole a pacientes alrededor de todo el mundo la posibilidad de ser tratados por médicos de todas las especialidades
+                sin necesidad de recurrir de forma presencial.
+            </p>
+
+            <a href="{{ url_for('paciente_bp.nuevo_turno') }}" class="boton-turno">Sacar Turno</a>
+        </div>
+    </div>
+
+    <!-- CARDS DE PROFESIONALES -->
+    <div class="profesionales-section" id="profesionales-container">
+        <!-- Cards se agregan dinámicamente aquí -->
+    </div>
+
+</div>
+
+<script>
+    // Cargar doctores dinámicamente
+    fetch('/doctors')
+        .then(response => response.json())
+        .then(doctores => {
+            const contenedor = document.getElementById('profesionales-container');
+            doctores.forEach(doc => {
+                const card = document.createElement('div');
+                card.className = 'card-profesional';
+
+                card.innerHTML = `
+                    <img src="${doc.imagen_url}" alt="Foto de ${doc.nombre}" class="foto-doctor">
+                    <h3>${doc.nombre} ${doc.apellido}</h3>
+                    <p>${doc.especialidad}</p>
+                `;
+                contenedor.appendChild(card);
+            });
+        });
+</script>
+{% endblock %}

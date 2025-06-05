@@ -1,0 +1,50 @@
+{% extends "base-paciente.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='turnos-paciente.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="turnos-container">
+    <div class="proximos-turnos">
+        <h2>PRÓXIMOS TURNOS</h2>
+        {% for turno in turnos %}
+            <div class="turno-card">
+                <div class="turno-header">
+                    <span class="nombre-paciente">{{ paciente.nombre }} {{ paciente.apellido }}</span>
+                    <span class="modo">💻 Virtual</span>
+                </div>
+                <div class="doctor-info">
+                    <strong>{{ turno.doctor.nombre }} {{ turno.doctor.apellido }}</strong><br>
+                    <span>{{ turno.doctor.especialidad }}</span>
+                </div>
+                <div class="fecha-hora">
+                    {{ turno.fecha.strftime('%A %d %B') }} - {{ turno.hora.strftime('%H:%M') }} hs
+                </div>
+                <div class="botones">
+                    <form method="POST" action="{{ url_for('paciente_bp.cancelar_turno', id_turno=turno.id_turno) }}">
+                        <button type="submit" class="btn-cancelar">Cancelar</button>
+                    </form>
+                    <a href="#" class="btn-ingresar">Ingresar</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="panel-lateral">
+        <a class="btn-nuevo-turno" href="{{ url_for('paciente_bp.nuevo_turno') }}">SOLICITAR NUEVO TURNO</a>
+        <h3>Doctores disponibles</h3>
+        <div class="doctores-disponibles">
+            {% for doctor in doctores %}
+            <div class="card-doctor">
+                <img src="{{ doctor.foto }}" alt="Foto de {{ doctor.nombre }}">
+                <div class="info-doctor">
+                    <p><strong>{{ doctor.nombre }} {{ doctor.apellido }}</strong></p>
+                    <p>{{ doctor.especialidad }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
