@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head><title>Temperaturas</title></head>
+<head>
+    <title>Control de Mano</title>
+    <script>
+        function iniciarMano() {
+            fetch('/iniciar-mano')
+                .then(response => {
+                    if (response.ok) {
+                        alert("🖐️ Mano iniciada correctamente");
+                    } else {
+                        alert("⚠️ Error al iniciar la mano");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("❌ No se pudo conectar con el servidor");
+                });
+        }
+    </script>
+</head>
 <body>
-<h1>Últimas temperaturas</h1>
-<ul>
-    {% for t in temperaturas %}
-        <li>{{ t.timestamp }} - {{ t.valor }} °C</li>
-    {% endfor %}
-</ul>
+    <h1>Control de Mano Robótica</h1>
+    <button onclick="iniciarMano()">Iniciar Mano</button>
 </body>
 </html>

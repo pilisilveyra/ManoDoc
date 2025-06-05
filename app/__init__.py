@@ -57,5 +57,12 @@ def create_app():
         datos = Temperatura.query.order_by(Temperatura.timestamp.desc()).limit(20).all()
         return render_template('temperaturas.html', temperaturas=datos)
 
+    import paho.mqtt.publish as publish
+
+    @app.route('/iniciar-mano')
+    def iniciar_mano():
+        publish.single("start/hand", payload="start", hostname="52.21.40.175")
+        return "OK"
+
     return app
 
