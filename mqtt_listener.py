@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 from app import create_app
 from app.extensions import db
+from app.models.Operacion import Operacion
 from app.models.Temperatura import Temperatura
 
 app = create_app()
@@ -16,7 +17,9 @@ def on_message(client, userdata, msg):
     try:
         valor = float(msg.payload.decode())
         with app.app_context():
-            nueva = Temperatura(valor=valor)
+            # Obtener la operación activa (lógica básica ejemplo)
+            operacion = Operacion.query.filter_by(estado="en_curso").order_by(Operacion.inicio.desc()).first()
+            nueva = Temperatura(valor=valor, id_operacion=operacion.id_operacion if operacion else None)
             db.session.add(nueva)
             db.session.commit()
         print("Temperatura guardada:", valor)

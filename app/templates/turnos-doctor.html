@@ -1,0 +1,33 @@
+{% extends "base-doctor.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='turnos-doctor.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="turnos-container">
+    <div class="proximos-turnos">
+        <h2>PRÓXIMOS TURNOS</h2>
+        {% for turno in turnos %}
+        <div class="turno-card">
+            <div class="turno-header">
+                <span class="nombre-paciente">{{ turno.paciente.nombre }} {{ turno.paciente.apellido }}</span>
+                <span class="modo">💻 Virtual</span>
+            </div>
+            <div class="doctor-info">
+                <strong>{{ turno.fecha.strftime('%A %d %B') }}</strong> - {{ turno.hora.strftime('%H:%M') }}
+            </div>
+            <div class="fecha-hora">
+                DNI: {{ turno.paciente.dni }} | Cobertura: {{ turno.paciente.cobertura }}
+            </div>
+            <div class="botones">
+                <form method="POST" action="{{ url_for('doctor_bp.cancelar_turno_doctor', id_turno=turno.id_turno) }}">
+                    <button type="submit" class="btn-cancelar">Cancelar</button>
+                </form>
+                <a href="{{ url_for('doctor_bp.ingresar_turno', id_turno=turno.id_turno) }}" class="btn-ingresar">Ingresar</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

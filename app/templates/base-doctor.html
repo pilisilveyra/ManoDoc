@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ManoDoc - Doctor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo-manodoc.png') }}" alt="Logo">
+        <span class="brand">MANODOC</span>
+    </div>
+    <div class="navbar-links">
+        <a href="{{ url_for('doctor_bp.turnos_doctor') }}" class="{% if active_page == 'turnos' %}active{% endif %}">TURNOS</a>
+        <a href="{{ url_for('doctor_bp.historial_operaciones') }}" class="{% if active_page == 'historial' %}active{% endif %}">HISTORIAL</a>
+        <a href="{{ url_for('doctor_bp.perfil_doctor') }}" class="{% if active_page == 'perfil' %}active{% endif %}">PERFIL</a>
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+</body>
+</html>
