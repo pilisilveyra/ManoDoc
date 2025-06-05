@@ -27,7 +27,7 @@ def login():
         if doctor and check_password_hash(doctor.contrasena, contrasena):
             session['usuario_id'] = doctor.id_doctor
             session['tipo'] = 'doctor'
-            return render_template('home-doctor.html')
+            return redirect(url_for('doctor_bp.turnos_doctor'))
 
         flash('Email o contraseña incorrectos')
         return render_template('login.html')

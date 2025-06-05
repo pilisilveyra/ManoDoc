@@ -8,3 +8,5 @@ class Temperatura(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     valor = db.Column(db.Float, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    id_operacion = db.Column(db.Integer, db.ForeignKey('operaciones.id_operacion'), nullable=True)
