@@ -64,5 +64,9 @@ def create_app():
         publish.single("start/hand", payload="start", hostname="52.21.40.175")
         return "OK"
 
+    @app.route('/mano')
+    def mano():
+        return render_template('mano.html')
+
     return app
 

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detección de Mano</title>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <h1>Detector de Mano</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <br>
+    <button onclick="iniciarCamara()">Iniciar Mano</button>
+</body>
+</html>

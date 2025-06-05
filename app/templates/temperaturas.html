@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Control de Mano</title>
-    <script>
-        function iniciarMano() {
-            fetch('/iniciar-mano')
-                .then(response => {
-                    if (response.ok) {
-                        alert("🖐️ Mano iniciada correctamente");
-                    } else {
-                        alert("⚠️ Error al iniciar la mano");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("❌ No se pudo conectar con el servidor");
-                });
-        }
-    </script>
+    <title>Detección de Mano (Web)</title>
 </head>
 <body>
-    <h1>Control de Mano Robótica</h1>
-    <button onclick="iniciarMano()">Iniciar Mano</button>
+    <h1>Usar cámara para detectar mano</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+
+    <script>
+        async function startCamera() {
+            try {
+                const video = document.getElementById('video');
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+            } catch (error) {
+                alert("No se pudo acceder a la cámara: " + error);
+            }
+        }
+
+        window.onload = startCamera;
+    </script>
 </body>
 </html>
