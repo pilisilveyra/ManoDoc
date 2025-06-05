@@ -1,8 +1,5 @@
 import pymysql
 
-from app.models.Doctor import Doctor
-from app.models.Paciente import Paciente
-
 pymysql.install_as_MySQLdb()
 
 from flask import Flask, render_template, redirect, url_for, session
@@ -23,6 +20,10 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
+        from app.models.Doctor import Doctor
+        from app.models.Paciente import Paciente
+        from app.models.Turno import Turno
+        from app.models.Temperatura import Temperatura
         db.create_all()
 
     app.register_blueprint(register_bp)
