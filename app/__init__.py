@@ -51,7 +51,6 @@ def create_app():
     def index():
         return render_template('login.html')
 
-
     @app.route('/temperaturas')
     def temperaturas():
         from app.models.Temperatura import Temperatura
