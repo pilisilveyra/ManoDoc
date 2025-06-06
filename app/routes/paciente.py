@@ -99,4 +99,51 @@ def ingresar_turno_paciente(id_turno):
     turno.paciente_ingreso = True
     db.session.commit()
     session['turno_en_curso'] = id_turno
-    return redirect(url_for('ver_cita'))
+    return redirect(url_for('paciente_bp.ver_cita_paciente'))
+
+@paciente_bp.route('/ver-cita')
+def ver_cita_paciente():
+    from app.models.Turno import Turno
+    from app.models.Operacion import Operacion
+    from app.models.ComentarioDoctor import ComentarioDoctor
+
+    turno_id = session.get('turno_en_curso')
+    if not turno_id:
+        return redirect(url_for('index'))
+
+    turno = Turno.query.get_or_404(turno_id)
+
+    tipo = session.get('tipo')
+    if tipo == 'paciente' and not turno.paciente_ingreso:
+        turno.paciente_ingreso = True
+        db.session.commit()
+
+    if not (turno.doctor_ingreso and turno.paciente_ingreso):
+        return render_template('ver_cita_esperando.html')
+
+    operacion = Operacion.query.filter_by(
+        id_turno=turno.id_turno,
+        estado='en_curso'
+    ).first()
+
+    if not operacion:
+        return render_template('ver_cita_esperando.html')  # Fallback seguro
+
+    comentarios = ComentarioDoctor.query.filter_by(id_operacion=operacion.id_operacion).order_by(ComentarioDoctor.timestamp.desc()).all()
+
+    return render_template("ver_cita_paciente.html", operacion=operacion, doctor=turno.doctor, comentarios=comentarios)
+
+@paciente_bp.route('/comentarios')
+def obtener_comentarios():
+    id_operacion = request.args.get("id_operacion", type=int)
+    comentarios = ComentarioDoctor.query.filter_by(id_operacion=id_operacion).order_by(ComentarioDoctor.timestamp.desc()).all()
+    operacion = Operacion.query.get_or_404(id_operacion)
+
+    return jsonify([
+        {
+            "contenido": c.contenido,
+            "timestamp": c.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            "estado_operacion": operacion.estado  # Se repite en todos para fácil lectura
+        }
+        for c in comentarios
+    ])

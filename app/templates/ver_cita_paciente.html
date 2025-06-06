@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Cita</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .contenedor {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .titulo {
+            font-size: 26px;
+            margin-bottom: 10px;
+            color: #2b6cb0;
+        }
+
+        .dato {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .comentarios {
+            margin-top: 30px;
+            background-color: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .comentario {
+            background: #edf2f7;
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+
+    <script>
+        async function actualizarComentarios() {
+            try {
+                const res = await fetch("/comentarios?id_operacion={{ operacion.id_operacion }}");
+                const data = await res.json();
+
+                const lista = document.getElementById("lista-comentarios");
+                lista.innerHTML = "";
+
+                data.forEach(com => {
+                    const div = document.createElement("div");
+                    div.className = "comentario";
+                    div.innerHTML = `<div>${com.contenido}</div><div class="timestamp">${com.timestamp}</div>`;
+                    lista.appendChild(div);
+                });
+
+                // Verificar si la operación fue finalizada
+                if (data.length > 0 && data[0].estado_operacion === 'finalizada') {
+                    window.location.href = "/turnos-paciente";
+                }
+            } catch (err) {
+                console.error("Error al actualizar comentarios", err);
+            }
+        }
+
+        setInterval(actualizarComentarios, 3000);
+        window.onload = actualizarComentarios;
+    </script>
+</head>
+<body>
+<div class="contenedor">
+    <div class="titulo">🩺 Tu cita médica</div>
+    <div class="dato"><strong>Tipo de operación:</strong> {{ operacion.tipo }}</div>
+    <div class="dato"><strong>Doctor:</strong> Dr. {{ doctor.nombre }} {{ doctor.apellido }}</div>
+
+    <div class="comentarios">
+        <h3>📋 Instrucciones del doctor</h3>
+        <div id="lista-comentarios">
+            <p>Cargando...</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
