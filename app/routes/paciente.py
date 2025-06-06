@@ -97,8 +97,10 @@ def cancelar_turno(id_turno):
 
 @paciente_bp.route('/turnos/<int:id_turno>/ingresar')
 def ingresar_turno_paciente(id_turno):
+    turno = Turno.query.get_or_404(id_turno)
+    turno.paciente_ingreso = True
+    db.session.commit()
     session['turno_en_curso'] = id_turno
-    session['tipo'] = 'paciente'
     return redirect(url_for('ver_cita'))
 
 @paciente_bp.route('/comentarios')

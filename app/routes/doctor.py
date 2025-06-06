@@ -58,6 +58,8 @@ def perfil_doctor():
 
 @doctor_bp.route('/turnos/<int:id_turno>/ingresar')
 def ingresar_turno_doctor(id_turno):
+    turno = Turno.query.get_or_404(id_turno)
+    turno.doctor_ingreso = True
+    db.session.commit()
     session['turno_en_curso'] = id_turno
-    session['tipo'] = 'doctor'
     return redirect(url_for('ver_cita'))
