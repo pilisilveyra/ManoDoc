@@ -7,6 +7,8 @@
             const res = await fetch("/temperaturas/datos");
             const data = await res.json();
 
+
+
             const lista = document.getElementById("lista-temperaturas");
             lista.innerHTML = "";
             data.forEach(t => {

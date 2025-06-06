@@ -16,10 +16,16 @@ def on_message(client, userdata, msg):
     try:
         valor = float(msg.payload.decode())
         with app.app_context():
-            nueva = Temperatura(valor=valor)
-            db.session.add(nueva)
-            db.session.commit()
-        print("Temperatura guardada:", valor)
+            from app.models.Operacion import Operacion
+            operacion_activa = Operacion.query.filter_by(estado='en_curso').first()
+
+            if operacion_activa:
+                nueva = Temperatura(valor=valor, id_operacion=operacion_activa.id_operacion)
+                db.session.add(nueva)
+                db.session.commit()
+                print(f"Temperatura guardada: {valor} asociada a operación {operacion_activa.id_operacion}")
+            else:
+                print("No hay operación en curso. No se guardó la temperatura.")
     except Exception as e:
         print("Error al guardar:", e)
 
