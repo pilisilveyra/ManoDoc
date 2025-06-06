@@ -72,6 +72,12 @@ def create_app():
         turno = Turno.query.get_or_404(turno_id)
         db.session.refresh(turno)
 
+        print("--------- VER CITA ---------")
+        print("TIPO:", tipo)
+        print("TURNO ID:", turno.id_turno)
+        print("Doctor ingreso:", turno.doctor_ingreso)
+        print("Paciente ingreso:", turno.paciente_ingreso)
+
         # ✅ Marcar el ingreso según el tipo
         if tipo == 'paciente' and not turno.paciente_ingreso:
             turno.paciente_ingreso = True
@@ -79,6 +85,11 @@ def create_app():
         elif tipo == 'doctor' and not turno.doctor_ingreso:
             turno.doctor_ingreso = True
             db.session.commit()
+
+        print(">>> Commit hecho")
+        db.session.refresh(turno)
+        print("Post-refresh: Doctor ingreso:", turno.doctor_ingreso)
+        print("Post-refresh: Paciente ingreso:", turno.paciente_ingreso)
 
         # ⏳ Si alguno todavía no ingresó, esperar
         if not (turno.paciente_ingreso and turno.doctor_ingreso):
