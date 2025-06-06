@@ -62,7 +62,11 @@ def create_app():
         from app.models.Temperatura import Temperatura
         datos = Temperatura.query.order_by(Temperatura.timestamp.desc()).limit(20).all()
         return jsonify([
-            {"valor": t.valor, "timestamp": t.timestamp.strftime("%Y-%m-%d %H:%M:%S")}
+            {
+                "valor": t.valor,
+                "timestamp": t.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+                "id_operacion": t.id_operacion
+            }
             for t in datos
         ])
 

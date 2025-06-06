@@ -7,13 +7,11 @@
             const res = await fetch("/temperaturas/datos");
             const data = await res.json();
 
-
-
             const lista = document.getElementById("lista-temperaturas");
             lista.innerHTML = "";
             data.forEach(t => {
                 const li = document.createElement("li");
-                li.textContent = `${t.timestamp} - ${t.valor} °C`;
+                li.textContent = `Operación ${t.id_operacion} | ${t.timestamp} - ${t.valor} °C`;
                 lista.appendChild(li);
             });
         }
