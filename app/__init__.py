@@ -107,8 +107,12 @@ def create_app():
         if not turno_id:
             return {"en_curso": False}
 
-        turno = Turno.query.get(turno_id)
-        return {"en_curso": turno and turno.paciente_ingreso and turno.doctor_ingreso}
+        from app.models.Turno import Turno
+        turno = db.session.query(Turno).filter_by(id_turno=turno_id).first()
+
+        db.session.refresh(turno)  # fuerza a recargar desde la base
+
+        return {"en_curso": bool(turno and turno.paciente_ingreso and turno.doctor_ingreso)}
 
     @app.route('/iniciar-mano')
     def iniciar_mano():
