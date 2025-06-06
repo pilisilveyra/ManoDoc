@@ -32,8 +32,6 @@ def turnos_doctor():
             Turno.id_doctor == id_doctor,
             db.func.concat(Turno.fecha, ' ', Turno.hora) >= datetime.now()
         ).all()
-        # Filtrá los que NO tienen operación o tienen operación que no finalizó
-        turnos = [t for t in turnos if not t.operacion or t.operacion.estado != 'finalizada']
         return render_template('turnos-doctor.html', turnos=turnos, active_page='turnos')
     return redirect(url_for('login_bp.login'))
 
