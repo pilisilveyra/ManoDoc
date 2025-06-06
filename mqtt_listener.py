@@ -18,11 +18,14 @@ def on_message(client, userdata, msg):
         valor = float(msg.payload.decode())
         with app.app_context():
             # Obtener la operación activa (lógica básica ejemplo)
-            operacion = Operacion.query.filter_by(estado="en_curso").order_by(Operacion.inicio.desc()).first()
-            nueva = Temperatura(valor=valor, id_operacion=operacion.id_operacion if operacion else None)
-            db.session.add(nueva)
-            db.session.commit()
-        print("Temperatura guardada:", valor)
+            operacion = Operacion.query.filter_by(estado="en_curso").first()
+            if operacion:
+                nueva = Temperatura(valor=valor, id_operacion=operacion.id_operacion)
+                db.session.add(nueva)
+                db.session.commit()
+                print("Temperatura guardada:", valor)
+            else:
+                print("No hay operación en curso, no se guardó la temperatura.")
     except Exception as e:
         print("Error al guardar:", e)
 
