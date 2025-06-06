@@ -79,6 +79,7 @@ def create_app():
             return redirect(url_for('index'))
 
         turno = Turno.query.get_or_404(turno_id)
+        db.session.refresh(turno)
 
         if turno.doctor_ingreso and turno.paciente_ingreso:
             from app.models.Operacion import Operacion
