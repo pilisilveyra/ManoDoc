@@ -76,18 +76,19 @@ def create_app():
     def ver_cita():
         turno_id = session.get('turno_en_curso')
         if not turno_id:
-            print("No hay turno en curso en sesión")
             return redirect(url_for('index'))
 
         turno = Turno.query.get_or_404(turno_id)
-        db.session.refresh(turno)
 
-        print("Paciente ingresó:", turno.paciente_ingreso)
-        print("Doctor ingresó:", turno.doctor_ingreso)
+        tipo = session.get('tipo')
+        if tipo == 'paciente' and not turno.paciente_ingreso:
+            turno.paciente_ingreso = True
+            db.session.commit()
+        if tipo == 'doctor' and not turno.doctor_ingreso:
+            turno.doctor_ingreso = True
+            db.session.commit()
 
         if turno.doctor_ingreso and turno.paciente_ingreso:
-            print("Ambos ingresaron, creando/verificando operación")
-            from app.models.Operacion import Operacion
             op = Operacion.query.filter_by(
                 id_paciente=turno.id_paciente,
                 id_doctor=turno.id_doctor,
@@ -102,11 +103,10 @@ def create_app():
                 )
                 db.session.add(op)
                 db.session.commit()
+
             return render_template('ver_cita.html', operacion=op)
 
-        print("Todavía falta uno, renderizando espera")
         return render_template('ver_cita_esperando.html')
-
 
     @app.route('/ver-cita/estado')
     def estado_cita():
