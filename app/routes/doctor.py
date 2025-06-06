@@ -31,7 +31,9 @@ def turnos_doctor():
         turnos = Turno.query.filter(
             Turno.id_doctor == id_doctor,
             db.func.concat(Turno.fecha, ' ', Turno.hora) >= datetime.now()
-        ).order_by(Turno.fecha, Turno.hora).all()
+        ).all()
+        # Filtrá los que NO tienen operación o tienen operación que no finalizó
+        turnos = [t for t in turnos if not t.operacion or t.operacion.estado != 'finalizada']
         return render_template('turnos-doctor.html', turnos=turnos, active_page='turnos')
     return redirect(url_for('login_bp.login'))
 
@@ -95,21 +97,32 @@ def ver_cita_doctor():
         operacion = Operacion(
             tipo=turno.tipo_operacion,
             id_paciente=turno.id_paciente,
-            id_doctor=turno.id_doctor
+            id_doctor=turno.id_doctor,
+            id_turno=turno.id_turno
         )
         db.session.add(operacion)
         db.session.commit()
 
     # Si envió un comentario
     if request.method == 'POST':
-        contenido = request.form.get("comentario")
-        if contenido:
-            nuevo = ComentarioDoctor(
-                contenido=contenido,
-                id_operacion=operacion.id_operacion
-            )
-            db.session.add(nuevo)
-            db.session.commit()
+        if "comentario" in request.form:
+            contenido = request.form.get("comentario")
+            if contenido:
+                nuevo = ComentarioDoctor(
+                    contenido=contenido,
+                    id_operacion=operacion.id_operacion
+                )
+                db.session.add(nuevo)
+                db.session.commit()
+
+        elif "nuevo_estado" in request.form:
+            nuevo_estado = request.form.get("nuevo_estado")
+            if nuevo_estado in ['en_curso', 'en_pausa', 'finalizada']:
+                operacion.estado = nuevo_estado
+                db.session.commit()
+                if nuevo_estado == 'finalizada':
+                    session.pop("turno_en_curso", None)
+                    return redirect(url_for('doctor_bp.turnos_doctor'))
 
     return render_template("ver_cita_doctor.html", operacion=operacion, paciente=turno.paciente)
 
