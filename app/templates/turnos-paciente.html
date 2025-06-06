@@ -25,7 +25,7 @@
                     <form method="POST" action="{{ url_for('paciente_bp.cancelar_turno', id_turno=turno.id_turno) }}">
                         <button type="submit" class="btn-cancelar">Cancelar</button>
                     </form>
-                    <a href="#" class="btn-ingresar">Ingresar</a>
+                    <a href="{{ url_for('paciente_bp.ingresar_turno_paciente', id_turno=turno.id_turno) }}" class="btn-ingresar">Ingresar</a>
                 </div>
             </div>
         {% endfor %}

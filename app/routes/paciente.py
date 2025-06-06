@@ -71,12 +71,14 @@ def crear_turno():
         id_doctor = request.form['id_doctor']
         fecha = request.form['fecha']
         hora = request.form['hora']
+        tipo_operacion = request.form['tipo_operacion']
 
         turno = Turno(
             id_paciente=id_paciente,
             id_doctor=id_doctor,
             fecha=datetime.strptime(fecha, "%Y-%m-%d").date(),
-            hora=datetime.strptime(hora, "%H:%M").time()
+            hora=datetime.strptime(hora, "%H:%M").time(),
+            tipo_operacion = tipo_operacion
         )
         db.session.add(turno)
         db.session.commit()
@@ -90,3 +92,9 @@ def cancelar_turno(id_turno):
     db.session.delete(turno)
     db.session.commit()
     return redirect(url_for('paciente_bp.turnos_paciente'))
+
+@paciente_bp.route('/turnos/<int:id_turno>/ingresar')
+def ingresar_turno_paciente(id_turno):
+    turno = Turno.query.get_or_404(id_turno)
+    session['paciente_ingreso_turno'] = id_turno
+    return redirect(url_for('ver_cita'))

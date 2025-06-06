@@ -43,9 +43,10 @@ def cancelar_turno_doctor(id_turno):
     return redirect(url_for('doctor_bp.turnos_doctor'))
 
 @doctor_bp.route('/turnos/<int:id_turno>/ingresar')
-def ingresar_turno(id_turno):
-    # Próximo paso: acá redirigimos a la página de operación
-    return f"Ingresando a turno {id_turno} (esto lo completamos luego)"
+def ingresar_turno_doctor(id_turno):
+    turno = Turno.query.get_or_404(id_turno)
+    session['doctor_ingreso_turno'] = id_turno
+    return redirect(url_for('ver_cita'))
 
 @doctor_bp.route('/historial-operaciones')
 def historial_operaciones():

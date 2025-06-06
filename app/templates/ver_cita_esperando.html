@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Esperando al otro participante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fefefe;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .contenedor {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 450px;
+        }
+
+        .titulo {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #dd6b20;
+        }
+
+        .mensaje {
+            font-size: 17px;
+            color: #555;
+        }
+    </style>
+    <script>
+        setInterval(async () => {
+            const res = await fetch("/ver-cita/estado");
+            const data = await res.json();
+            if (data.en_curso) {
+                window.location.href = "/ver-cita";
+            }
+        }, 3000); // cada 3 segundos
+    </script>
+</head>
+<body>
+<div class="contenedor">
+    <div class="titulo">⏳ Esperando al otro participante...</div>
+    <div class="mensaje">
+        La cita se activará automáticamente cuando ambos hayan ingresado.<br>
+        Por favor, manténgase en esta pantalla.
+    </div>
+</div>
+</body>
+</html>

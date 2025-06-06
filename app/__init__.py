@@ -72,6 +72,45 @@ def create_app():
 
     import paho.mqtt.publish as publish
 
+    @app.route('/ver-cita')
+    def ver_cita():
+        turno_id_doc = session.get('doctor_ingreso_turno')
+        turno_id_pac = session.get('paciente_ingreso_turno')
+
+        if turno_id_doc and turno_id_pac and turno_id_doc == turno_id_pac:
+            turno = Turno.query.get(turno_id_doc)
+
+            # Si no hay operación activa, crearla
+            from app.models.Operacion import Operacion
+            op = Operacion.query.filter_by(
+                id_paciente=turno.id_paciente,
+                id_doctor=turno.id_doctor,
+                estado="en_curso"
+            ).first()
+
+            if not op:
+                op = Operacion(
+                    tipo=turno.tipo_operacion,
+                    id_paciente=turno.id_paciente,
+                    id_doctor=turno.id_doctor
+                )
+                db.session.add(op)
+                db.session.commit()
+
+            return render_template('ver_cita.html', operacion=op)
+
+        # Si aún falta alguien, mostramos mensaje de espera
+        return render_template('ver_cita_esperando.html')
+
+    @app.route('/ver-cita/estado')
+    def estado_cita():
+        turno_id_doc = session.get('doctor_ingreso_turno')
+        turno_id_pac = session.get('paciente_ingreso_turno')
+
+        if turno_id_doc and turno_id_pac and turno_id_doc == turno_id_pac:
+            return {"en_curso": True}
+        return {"en_curso": False}
+
     @app.route('/iniciar-mano')
     def iniciar_mano():
         publish.single("start/hand", payload="start", hostname="52.21.40.175")
