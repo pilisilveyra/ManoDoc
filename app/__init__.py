@@ -2,7 +2,7 @@ import pymysql
 
 pymysql.install_as_MySQLdb()
 
-from flask import Flask, render_template, redirect, url_for, session
+from flask import Flask, render_template, redirect, url_for, session, jsonify
 from app.extensions import db
 from app.routes.register import register_bp
 from app.routes.login import login_bp
@@ -56,6 +56,15 @@ def create_app():
         from app.models.Temperatura import Temperatura
         datos = Temperatura.query.order_by(Temperatura.timestamp.desc()).limit(20).all()
         return render_template('temperaturas.html', temperaturas=datos)
+
+    @app.route('/temperaturas/datos')
+    def temperaturas_datos():
+        from app.models.Temperatura import Temperatura
+        datos = Temperatura.query.order_by(Temperatura.timestamp.desc()).limit(20).all()
+        return jsonify([
+            {"valor": t.valor, "timestamp": t.timestamp.strftime("%Y-%m-%d %H:%M:%S")}
+            for t in datos
+        ])
 
     import paho.mqtt.publish as publish
 
