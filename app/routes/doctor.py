@@ -111,7 +111,7 @@ def ver_cita_doctor():
             db.session.add(nuevo)
             db.session.commit()
 
-    return render_template("ver_cita_doctor.html", operacion=operacion)
+    return render_template("ver_cita_doctor.html", operacion=operacion, paciente=turno.paciente)
 
 
 
