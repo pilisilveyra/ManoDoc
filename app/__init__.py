@@ -56,6 +56,81 @@ def create_app():
 
 
     import paho.mqtt.publish as publish
+    @app.route('/ver-cita', methods=['GET', 'POST'])
+    def ver_cita():
+        from app.models.Turno import Turno
+        from app.models.Operacion import Operacion
+        from app.models.ComentarioDoctor import ComentarioDoctor
+        from app.extensions import db
+
+        turno_id = session.get('turno_en_curso')
+        tipo = session.get('tipo')
+
+        if not turno_id or tipo not in ['doctor', 'paciente']:
+            return redirect(url_for('index'))
+
+        turno = Turno.query.get_or_404(turno_id)
+        db.session.refresh(turno)
+
+        # ✅ Marcar el ingreso según el tipo
+        if tipo == 'paciente' and not turno.paciente_ingreso:
+            turno.paciente_ingreso = True
+            db.session.commit()
+        elif tipo == 'doctor' and not turno.doctor_ingreso:
+            turno.doctor_ingreso = True
+            db.session.commit()
+
+        # ⏳ Si alguno todavía no ingresó, esperar
+        if not (turno.paciente_ingreso and turno.doctor_ingreso):
+            return render_template("ver_cita_esperando.html")
+
+        # 🏥 Crear la operación si no existe
+        operacion = Operacion.query.filter_by(
+            id_turno=turno.id_turno,
+            estado='en_curso'
+        ).first()
+
+        if not operacion:
+            operacion = Operacion(
+                tipo=turno.tipo_operacion,
+                id_paciente=turno.id_paciente,
+                id_doctor=turno.id_doctor,
+                id_turno=turno.id_turno
+            )
+            db.session.add(operacion)
+            db.session.commit()
+
+        # 📝 Comentario del doctor
+        if request.method == 'POST':
+            if tipo == 'doctor':
+                if "comentario" in request.form:
+                    contenido = request.form.get("comentario")
+                    if contenido:
+                        nuevo = ComentarioDoctor(
+                            contenido=contenido,
+                            id_operacion=operacion.id_operacion
+                        )
+                        db.session.add(nuevo)
+                        db.session.commit()
+
+                elif "nuevo_estado" in request.form:
+                    nuevo_estado = request.form.get("nuevo_estado")
+                    if nuevo_estado in ['en_curso', 'en_pausa', 'finalizada']:
+                        operacion.estado = nuevo_estado
+                        db.session.commit()
+                        if nuevo_estado == 'finalizada':
+                            session.pop("turno_en_curso", None)
+                            return redirect(url_for('doctor_bp.turnos_doctor'))
+
+        # 👨‍⚕️ Renderizar según tipo
+        if tipo == 'doctor':
+            return render_template("ver_cita_doctor.html", operacion=operacion, paciente=turno.paciente)
+        else:
+            comentarios = ComentarioDoctor.query.filter_by(
+                id_operacion=operacion.id_operacion
+            ).order_by(ComentarioDoctor.timestamp.desc()).all()
+            return render_template("ver_cita_paciente.html", operacion=operacion, doctor=turno.doctor,
+                                   comentarios=comentarios)
 
     @app.route('/ver-cita/estado')
     def ver_estado_cita():
@@ -67,14 +142,11 @@ def create_app():
 
         turno = Turno.query.get(turno_id)
 
-        # FORZAMOS refresco desde la DB para obtener el valor actualizado
+        # Forzamos refresco desde la DB
         db.session.refresh(turno)
 
         if turno.doctor_ingreso and turno.paciente_ingreso:
-            if tipo == 'doctor':
-                return jsonify({"en_curso": True, "url": url_for("doctor_bp.ver_cita_doctor")})
-            else:
-                return jsonify({"en_curso": True, "url": url_for("paciente_bp.ver_cita_paciente")})
+            return jsonify({"en_curso": True, "url": url_for("ver_cita")})
 
         return jsonify({"en_curso": False})
 
