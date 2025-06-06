@@ -1,4 +1,6 @@
 import paho.mqtt.client as mqtt
+from sqlalchemy import func
+
 from app import create_app
 from app.extensions import db
 from app.models.Operacion import Operacion
@@ -20,7 +22,7 @@ def on_message(client, userdata, msg):
             from app.models.Temperatura import Temperatura
             from app.models.Operacion import Operacion
             # Obtener la operación activa (lógica básica ejemplo)
-            operacion = Operacion.query.filter_by(estado="en_curso").first()
+            operacion = Operacion.query.filter(func.trim(Operacion.estado) == "en_curso").first()
             if operacion:
                 nueva = Temperatura(valor=valor, id_operacion=operacion.id_operacion)
                 db.session.add(nueva)
