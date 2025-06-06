@@ -12,7 +12,6 @@ class Operacion(db.Model):
 
     id_paciente = db.Column(db.Integer, db.ForeignKey('paciente.id_paciente'), nullable=False)
     id_doctor = db.Column(db.Integer, db.ForeignKey('doctor.id_doctor'), nullable=False)
-    id_turno = db.Column(db.Integer, db.ForeignKey('turnos.id_turno'), nullable=False)
 
     paciente = db.relationship('Paciente', backref=db.backref('operaciones', lazy=True))
     doctor = db.relationship('Doctor', backref=db.backref('operaciones', lazy=True))
