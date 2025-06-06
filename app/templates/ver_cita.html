@@ -41,4 +41,10 @@
 <body>
 <div class="contenedor">
     <div class="titulo">🩺 Cita en curso</div>
-    <div class="dato"><strong>Tipo de operación:</strong> {{ operac
+    <div class="dato"><strong>Tipo de operación:</strong> {{ operacion.tipo }}</div>
+    <div class="dato"><strong>Paciente:</strong> {{ operacion.paciente.nombre }} {{ operacion.paciente.apellido }}</div>
+    <div class="dato"><strong>Doctor:</strong> {{ operacion.doctor.nombre }} {{ operacion.doctor.apellido }}</div>
+    <div class="dato"><strong>ID operación:</strong> {{ operacion.id_operacion }}</div>
+</div>
+</body>
+</html>
