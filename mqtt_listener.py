@@ -15,23 +15,28 @@ def on_connect(client, userdata, flags, rc):
     print("Conectado con código", rc)
     client.subscribe(TOPIC)
 
+
 def on_message(client, userdata, msg):
     try:
         valor = float(msg.payload.decode())
         with app.app_context():
-            from app.models.Temperatura import Temperatura
+            print("Temperatura recibida:", valor)
+
             from app.models.Operacion import Operacion
-            # Obtener la operación activa (lógica básica ejemplo)
+            from sqlalchemy import func
+
             operacion = Operacion.query.filter(func.trim(Operacion.estado) == "en_curso").first()
             if operacion:
+                print("Operación encontrada con ID:", operacion.id_operacion)
                 nueva = Temperatura(valor=valor, id_operacion=operacion.id_operacion)
                 db.session.add(nueva)
                 db.session.commit()
-                print("Temperatura guardada:", valor)
+                print("Temperatura guardada con operación.")
             else:
-                print("No hay operación en curso, no se guardó la temperatura.")
+                print("No hay operación en curso.")
     except Exception as e:
         print("Error al guardar:", e)
+
 
 client = mqtt.Client()
 client.on_connect = on_connect
