@@ -24,6 +24,7 @@ def create_app():
         from app.models.Paciente import Paciente
         from app.models.Turno import Turno
         from app.models.Temperatura import Temperatura
+        from app.models.Operacion import Operacion
         db.create_all()
 
     app.register_blueprint(register_bp)
