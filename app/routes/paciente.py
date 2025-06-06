@@ -1,8 +1,10 @@
 from datetime import date, datetime
 
-from flask import Blueprint, request, redirect, url_for, render_template, session, flash
+from flask import Blueprint, request, redirect, url_for, render_template, session, flash, jsonify
 
 from app import db
+from app.models.ComentarioDoctor import ComentarioDoctor
+from app.models.Operacion import Operacion
 from app.models.Paciente import Paciente
 from app.models.Turno import Turno
 from app.models.Doctor import Doctor
@@ -112,6 +114,7 @@ def ver_cita_paciente():
         return redirect(url_for('index'))
 
     turno = Turno.query.get_or_404(turno_id)
+    db.session.refresh(turno)
 
     tipo = session.get('tipo')
     if tipo == 'paciente' and not turno.paciente_ingreso:

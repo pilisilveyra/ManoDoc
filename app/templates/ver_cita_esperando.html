@@ -36,14 +36,14 @@
         }
     </style>
     <script>
-        setInterval(async () => {
-            const res = await fetch("/ver-cita/estado");
-            const data = await res.json();
-            if (data.en_curso) {
-                window.location.href = "/ver-cita";
-            }
-        }, 3000); // cada 3 segundos
-    </script>
+    setInterval(async () => {
+        const res = await fetch("/ver-cita/estado");
+        const data = await res.json();
+        if (data.en_curso && data.url) {
+            window.location.href = data.url;
+        }
+    }, 3000); // cada 3 segundos
+</script>
 </head>
 <body>
 <div class="contenedor">

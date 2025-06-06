@@ -77,6 +77,7 @@ def ver_cita_doctor():
         return redirect(url_for('index'))
 
     turno = Turno.query.get_or_404(turno_id)
+    db.session.refresh(turno)
 
     tipo = session.get('tipo')
     if tipo == 'doctor' and not turno.doctor_ingreso:

@@ -57,54 +57,25 @@ def create_app():
 
     import paho.mqtt.publish as publish
 
-    @app.route('/ver-cita')
-    def ver_cita():
-        turno_id = session.get('turno_en_curso')
-        if not turno_id:
-            return redirect(url_for('index'))
-
-        turno = Turno.query.get_or_404(turno_id)
-
-        tipo = session.get('tipo')
-        if tipo == 'paciente' and not turno.paciente_ingreso:
-            turno.paciente_ingreso = True
-            db.session.commit()
-        if tipo == 'doctor' and not turno.doctor_ingreso:
-            turno.doctor_ingreso = True
-            db.session.commit()
-
-        if turno.doctor_ingreso and turno.paciente_ingreso:
-            op = Operacion.query.filter_by(
-                id_paciente=turno.id_paciente,
-                id_doctor=turno.id_doctor,
-                estado="en_curso"
-            ).first()
-
-            if not op:
-                op = Operacion(
-                    tipo=turno.tipo_operacion,
-                    id_paciente=turno.id_paciente,
-                    id_doctor=turno.id_doctor
-                )
-                db.session.add(op)
-                db.session.commit()
-
-            return render_template('ver_cita.html', operacion=op)
-
-        return render_template('ver_cita_esperando.html')
 
     @app.route('/ver-cita/estado')
-    def estado_cita():
+    def ver_cita_estado():
         turno_id = session.get('turno_en_curso')
-        if not turno_id:
-            return {"en_curso": False}
+        tipo = session.get('tipo')
+        if not turno_id or tipo not in ['doctor', 'paciente']:
+            return jsonify({"en_curso": False})
 
-        from app.models.Turno import Turno
-        turno = db.session.query(Turno).filter_by(id_turno=turno_id).first()
+        turno = Turno.query.get(turno_id)
+        db.session.refresh(turno)
+        puede_ingresar = turno.doctor_ingreso and turno.paciente_ingreso
 
-        db.session.refresh(turno)  # fuerza a recargar desde la base
+        redireccion = "/ver-cita"
+        if tipo == "doctor":
+            redireccion = url_for("doctor_bp.ver_cita_doctor")
+        elif tipo == "paciente":
+            redireccion = url_for("paciente_bp.ver_cita_paciente")
 
-        return {"en_curso": bool(turno and turno.paciente_ingreso and turno.doctor_ingreso)}
+        return jsonify({"en_curso": puede_ingresar, "url": redireccion})
 
     @app.route('/iniciar-mano')
     def iniciar_mano():
