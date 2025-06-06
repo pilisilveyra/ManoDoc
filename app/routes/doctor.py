@@ -42,14 +42,6 @@ def cancelar_turno_doctor(id_turno):
     db.session.commit()
     return redirect(url_for('doctor_bp.turnos_doctor'))
 
-@doctor_bp.route('/turnos/<int:id_turno>/ingresar')
-def ingresar_turno_doctor(id_turno):
-    turno = Turno.query.get_or_404(id_turno)
-    turno.doctor_ingreso = True
-    db.session.commit()
-    session['turno_en_curso'] = id_turno
-    return redirect(url_for('ver_cita'))
-
 
 @doctor_bp.route('/historial-operaciones')
 def historial_operaciones():
@@ -61,6 +53,65 @@ def perfil_doctor():
         doctor = Doctor.query.get(session['usuario_id'])
         return render_template('perfil-doctor.html', doctor=doctor, active_page='perfil')
     return redirect(url_for('login_bp.login'))
+
+@doctor_bp.route('/turnos/<int:id_turno>/ingresar')
+def ingresar_turno_doctor(id_turno):
+    turno = Turno.query.get_or_404(id_turno)
+    turno.doctor_ingreso = True
+    db.session.commit()
+    session['turno_en_curso'] = id_turno
+    return redirect(url_for('ver_cita_doctor'))
+
+@doctor_bp.route('/ver-cita', methods=['GET', 'POST'])
+def ver_cita_doctor():
+    from app.models.Turno import Turno
+    from app.models.Operacion import Operacion
+    from app.models.ComentarioDoctor import ComentarioDoctor
+    from app.models.Temperatura import Temperatura
+    from app.extensions import db
+
+    turno_id = session.get('turno_en_curso')
+    if not turno_id:
+        return redirect(url_for('index'))
+
+    turno = Turno.query.get_or_404(turno_id)
+
+    tipo = session.get('tipo')
+    if tipo == 'doctor' and not turno.doctor_ingreso:
+        turno.doctor_ingreso = True
+        db.session.commit()
+
+
+    if not (turno.doctor_ingreso and turno.paciente_ingreso):
+        return render_template('ver_cita_esperando.html')
+
+    operacion = Operacion.query.filter_by(
+        id_paciente=turno.id_paciente,
+        id_doctor=turno.id_doctor,
+        estado='en_curso'
+    ).first()
+
+    if not operacion:
+        operacion = Operacion(
+            tipo=turno.tipo_operacion,
+            id_paciente=turno.id_paciente,
+            id_doctor=turno.id_doctor
+        )
+        db.session.add(operacion)
+        db.session.commit()
+
+    # Si envió un comentario
+    if request.method == 'POST':
+        contenido = request.form.get("comentario")
+        if contenido:
+            nuevo = ComentarioDoctor(
+                contenido=contenido,
+                id_operacion=operacion.id_operacion
+            )
+            db.session.add(nuevo)
+            db.session.commit()
+
+    return render_template("ver_cita_doctor.html", operacion=operacion)
 
 
 

@@ -2,12 +2,13 @@ import pymysql
 
 pymysql.install_as_MySQLdb()
 
-from flask import Flask, render_template, redirect, url_for, session, jsonify
+from flask import Flask, render_template, redirect, url_for, session, jsonify, request
 from app.extensions import db
 from app.routes.register import register_bp
 from app.routes.login import login_bp
 from app.routes.paciente import paciente_bp
 from app.routes.doctor import doctor_bp
+from app.routes.temperaturas import temperaturas_bp
 import os
 
 def create_app():
@@ -31,6 +32,7 @@ def create_app():
     app.register_blueprint(login_bp)
     app.register_blueprint(paciente_bp)
     app.register_blueprint(doctor_bp)
+    app.register_blueprint(temperaturas_bp)
 
     @app.context_processor
     def inject_paciente():
@@ -51,24 +53,6 @@ def create_app():
     def index():
         return render_template('login.html')
 
-    @app.route('/temperaturas')
-    def temperaturas():
-        from app.models.Temperatura import Temperatura
-        datos = Temperatura.query.order_by(Temperatura.timestamp.desc()).limit(20).all()
-        return render_template('temperaturas.html', temperaturas=datos)
-
-    @app.route('/temperaturas/datos')
-    def temperaturas_datos():
-        from app.models.Temperatura import Temperatura
-        datos = Temperatura.query.order_by(Temperatura.timestamp.desc()).limit(20).all()
-        return jsonify([
-            {
-                "valor": t.valor,
-                "timestamp": t.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-                "id_operacion": t.id_operacion
-            }
-            for t in datos
-        ])
 
     import paho.mqtt.publish as publish
 
