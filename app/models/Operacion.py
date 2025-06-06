@@ -15,4 +15,3 @@ class Operacion(db.Model):
 
     paciente = db.relationship('Paciente', backref=db.backref('operaciones', lazy=True))
     doctor = db.relationship('Doctor', backref=db.backref('operaciones', lazy=True))
-    turno = db.relationship('Turno', backref=db.backref('operacion', uselist=False))
