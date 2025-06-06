@@ -57,25 +57,26 @@ def create_app():
 
     import paho.mqtt.publish as publish
 
-
     @app.route('/ver-cita/estado')
-    def ver_cita_estado():
+    def ver_estado_cita():
         turno_id = session.get('turno_en_curso')
         tipo = session.get('tipo')
+
         if not turno_id or tipo not in ['doctor', 'paciente']:
             return jsonify({"en_curso": False})
 
         turno = Turno.query.get(turno_id)
+
+        # FORZAMOS refresco desde la DB para obtener el valor actualizado
         db.session.refresh(turno)
-        puede_ingresar = turno.doctor_ingreso and turno.paciente_ingreso
 
-        redireccion = "/ver-cita"
-        if tipo == "doctor":
-            redireccion = url_for("doctor_bp.ver_cita_doctor")
-        elif tipo == "paciente":
-            redireccion = url_for("paciente_bp.ver_cita_paciente")
+        if turno.doctor_ingreso and turno.paciente_ingreso:
+            if tipo == 'doctor':
+                return jsonify({"en_curso": True, "url": url_for("doctor_bp.ver_cita_doctor")})
+            else:
+                return jsonify({"en_curso": True, "url": url_for("paciente_bp.ver_cita_paciente")})
 
-        return jsonify({"en_curso": puede_ingresar, "url": redireccion})
+        return jsonify({"en_curso": False})
 
     @app.route('/iniciar-mano')
     def iniciar_mano():
