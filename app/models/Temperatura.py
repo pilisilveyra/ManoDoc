@@ -10,4 +10,5 @@ class Temperatura(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     id_operacion = db.Column(db.Integer, db.ForeignKey('operaciones.id_operacion'), nullable=True)
-    operacion = db.relationship('Operacion', backref='temperaturas')
+    operacion = db.relationship('Operacion', back_populates='temperaturas')
+

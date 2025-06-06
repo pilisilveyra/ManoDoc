@@ -15,4 +15,4 @@ class Operacion(db.Model):
 
     paciente = db.relationship('Paciente', backref=db.backref('operaciones', lazy=True))
     doctor = db.relationship('Doctor', backref=db.backref('operaciones', lazy=True))
-    temperaturas = db.relationship('Temperatura', backref='operacion', lazy=True)
+    temperaturas = db.relationship('Temperatura', back_populates='operacion')
