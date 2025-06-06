@@ -17,6 +17,8 @@ def on_message(client, userdata, msg):
     try:
         valor = float(msg.payload.decode())
         with app.app_context():
+            from app.models.Temperatura import Temperatura
+            from app.models.Operacion import Operacion
             # Obtener la operación activa (lógica básica ejemplo)
             operacion = Operacion.query.filter_by(estado="en_curso").first()
             if operacion:
