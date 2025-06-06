@@ -62,7 +62,7 @@ def ingresar_turno_doctor(id_turno):
     turno.doctor_ingreso = True
     db.session.commit()
     session['turno_en_curso'] = id_turno
-    return redirect(url_for('ver_cita_doctor'))
+    return redirect(url_for('doctor_bp.ver_cita_doctor'))
 
 @doctor_bp.route('/ver-cita', methods=['GET', 'POST'])
 def ver_cita_doctor():
