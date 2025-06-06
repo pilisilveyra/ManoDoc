@@ -12,6 +12,9 @@ class Turno(db.Model):
     id_doctor = db.Column(db.Integer, db.ForeignKey('doctor.id_doctor'), nullable=False)
     tipo_operacion = db.Column(db.String(100), nullable=False)
 
+    doctor_ingreso = db.Column(db.Boolean, default=False)
+    paciente_ingreso = db.Column(db.Boolean, default=False)
+
     # Relaciones (opcionales pero útiles)
     paciente = db.relationship('Paciente', backref=db.backref('turnos', lazy=True))
     doctor = db.relationship('Doctor', backref=db.backref('turnos', lazy=True))

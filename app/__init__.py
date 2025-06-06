@@ -74,13 +74,13 @@ def create_app():
 
     @app.route('/ver-cita')
     def ver_cita():
-        turno_id_doc = session.get('doctor_ingreso_turno')
-        turno_id_pac = session.get('paciente_ingreso_turno')
+        turno_id = session.get('turno_en_curso')
+        if not turno_id:
+            return redirect(url_for('index'))
 
-        if turno_id_doc and turno_id_pac and turno_id_doc == turno_id_pac:
-            turno = Turno.query.get(turno_id_doc)
+        turno = Turno.query.get_or_404(turno_id)
 
-            # Si no hay operación activa, crearla
+        if turno.doctor_ingreso and turno.paciente_ingreso:
             from app.models.Operacion import Operacion
             op = Operacion.query.filter_by(
                 id_paciente=turno.id_paciente,
@@ -99,17 +99,16 @@ def create_app():
 
             return render_template('ver_cita.html', operacion=op)
 
-        # Si aún falta alguien, mostramos mensaje de espera
         return render_template('ver_cita_esperando.html')
 
     @app.route('/ver-cita/estado')
     def estado_cita():
-        turno_id_doc = session.get('doctor_ingreso_turno')
-        turno_id_pac = session.get('paciente_ingreso_turno')
+        turno_id = session.get('turno_en_curso')
+        if not turno_id:
+            return {"en_curso": False}
 
-        if turno_id_doc and turno_id_pac and turno_id_doc == turno_id_pac:
-            return {"en_curso": True}
-        return {"en_curso": False}
+        turno = Turno.query.get(turno_id)
+        return {"en_curso": turno and turno.paciente_ingreso and turno.doctor_ingreso}
 
     @app.route('/iniciar-mano')
     def iniciar_mano():
