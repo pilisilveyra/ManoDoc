@@ -10,6 +10,7 @@ login_bp = Blueprint('login_bp', __name__)
 
 @login_bp.route('/login', methods=['POST'])
 def login():
+    session.clear()
     if request.method == 'POST':
         email = request.form['email']
         contrasena = request.form['contrasena']
