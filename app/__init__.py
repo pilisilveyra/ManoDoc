@@ -65,12 +65,6 @@ def create_app():
         turno = Turno.query.get_or_404(turno_id)
 
         tipo = session.get('tipo')
-        if tipo == 'paciente' and not turno.paciente_ingreso:
-            turno.paciente_ingreso = True
-            db.session.commit()
-        if tipo == 'doctor' and not turno.doctor_ingreso:
-            turno.doctor_ingreso = True
-            db.session.commit()
 
         if turno.doctor_ingreso and turno.paciente_ingreso:
             op = Operacion.query.filter_by(id_turno=turno.id_turno).first()
