@@ -3,9 +3,8 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #e7f5f4; /* mismo que navbar */
     margin: 0;
-    padding: 40px 0;
+    padding: 0; /* 🔧 Eliminamos separación innecesaria */
 }
-
 /* Contenedor principal */
 .perfil-container {
     max-width: 650px;
