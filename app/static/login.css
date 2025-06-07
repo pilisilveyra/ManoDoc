@@ -1,9 +1,10 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9f8;
+  background: linear-gradient(to bottom, #e0f7f5, #f0f2f2); /* Turquesa + gris claro */
   padding: 50px;
   margin: 0;
 }
+
 
 .form-container {
   background-color: #ffffff;
@@ -73,3 +74,15 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.mensaje-error {
+    background-color: #fdecea;
+    color: #cc1f1a;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    text-align: center;
+}
+

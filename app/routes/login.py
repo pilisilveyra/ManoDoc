@@ -11,27 +11,26 @@ login_bp = Blueprint('login_bp', __name__)
 @login_bp.route('/login', methods=['POST'])
 def login():
     session.clear()
-    if request.method == 'POST':
-        email = request.form['email']
-        contrasena = request.form['contrasena']
+    email = request.form['email']
+    contrasena = request.form['contrasena']
 
-        # Buscar en Pacientes
-        paciente = Paciente.query.filter_by(email=email).first()
-        if paciente and check_password_hash(paciente.contrasena, contrasena):
-            session['usuario_id'] = paciente.id_paciente
-            session['tipo'] = 'paciente'
+    paciente = Paciente.query.filter_by(email=email).first()
+    if paciente and check_password_hash(paciente.contrasena, contrasena):
+        session['usuario_id'] = paciente.id_paciente
+        session['tipo'] = 'paciente'
+        session.permanent = True
+        return redirect(url_for('paciente_bp.home_paciente'))
 
-            return redirect(url_for('paciente_bp.home_paciente'))
+    doctor = Doctor.query.filter_by(email=email).first()
+    if doctor and check_password_hash(doctor.contrasena, contrasena):
+        session['usuario_id'] = doctor.id_doctor
+        session['tipo'] = 'doctor'
+        session.permanent = True
+        return redirect(url_for('doctor_bp.turnos_doctor'))
 
-        # Buscar en Doctores
-        doctor = Doctor.query.filter_by(email=email).first()
-        if doctor and check_password_hash(doctor.contrasena, contrasena):
-            session['usuario_id'] = doctor.id_doctor
-            session['tipo'] = 'doctor'
-            return redirect(url_for('doctor_bp.turnos_doctor'))
+    flash('Email o contraseña incorrectos. Verificá tus datos.')
+    return render_template('login.html')
 
-        flash('Email o contraseña incorrectos')
-        return render_template('login.html')
 
 @login_bp.route('/logout')
 def logout():

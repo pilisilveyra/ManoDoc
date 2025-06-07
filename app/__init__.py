@@ -1,4 +1,5 @@
 import pymysql
+from datetime import timedelta
 
 pymysql.install_as_MySQLdb()
 
@@ -15,6 +16,7 @@ def create_app():
     app = Flask(__name__)
 
     app.secret_key = os.environ.get('SECRET_KEY', 'clave-secreta-default')
+    app.permanent_session_lifetime = timedelta(minutes=30)
 
     app.config.from_object('app.config')
 

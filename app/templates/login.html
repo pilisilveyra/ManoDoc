@@ -9,6 +9,13 @@
 <body>
     <div class="form-container">
         <h2>Iniciar sesión</h2>
+        {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="mensaje-error">
+        {{ messages[0] }}
+    </div>
+  {% endif %}
+{% endwith %}
         <form method="POST" action="{{ url_for('login_bp.login') }}">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
