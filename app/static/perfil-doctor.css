@@ -1,65 +1,78 @@
-.perfil-container {
-    max-width: 700px;
-    margin: 40px auto;
-    background: white;
-    border-radius: 16px;
-    padding: 30px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-    font-family: Arial, sans-serif;
+/* Fondo general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e7f5f4; /* mismo que navbar */
+    margin: 0;
+    padding: 40px 0;
 }
 
+/* Contenedor principal */
+.perfil-container {
+    max-width: 650px;
+    margin: auto;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Encabezado: foto + nombre */
 .perfil-header {
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    gap: 1.5rem;
     border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 20px;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .perfil-foto {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     object-fit: cover;
     border-radius: 50%;
     border: 3px solid #2b6cb0;
 }
 
 .perfil-nombre h2 {
-    font-size: 26px;
-    color: #2b6cb0;
     margin: 0;
+    color: #2b6cb0;
+    font-size: 1.8rem;
 }
 
-.perfil-info {
-    margin-top: 30px;
+/* Información */
+.perfil-info .info-box {
+    font-size: 1rem;
+    line-height: 1.8;
 }
 
 .info-box p {
-    font-size: 18px;
-    margin-bottom: 12px;
+    margin: 0.8rem 0;
 }
 
 .info-box strong {
     color: #2f855a;
-    margin-right: 8px;
+    margin-right: 6px;
 }
 
+/* Botón cerrar sesión */
 .cerrar-sesion {
-    margin-top: 40px;
+    margin-top: 2.5rem;
     text-align: center;
 }
 
 .cerrar-sesion a {
-  display: inline-block;
-  background-color: #007f7f;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+    background-color: #007f7f;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    display: inline-block;
 }
 
 .cerrar-sesion a:hover {
-  background-color: #045f5f;
+    background-color: #045f5f;
 }
