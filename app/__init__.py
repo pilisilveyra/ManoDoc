@@ -73,11 +73,7 @@ def create_app():
             db.session.commit()
 
         if turno.doctor_ingreso and turno.paciente_ingreso:
-            op = Operacion.query.filter_by(
-                id_paciente=turno.id_paciente,
-                id_doctor=turno.id_doctor,
-                estado="en_curso"
-            ).first()
+            op = Operacion.query.filter_by(id_turno=turno.id_turno).first()
 
             if not op:
                 op = Operacion(

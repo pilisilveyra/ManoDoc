@@ -59,6 +59,12 @@
                 const res = await fetch("/comentarios?id_operacion={{ operacion.id_operacion }}");
                 const data = await res.json();
 
+                // 🔁 Si la operación fue finalizada, redirigimos
+                if (data.length > 0 && data[0].estado_operacion === "finalizada") {
+                    window.location.href = "/ver-cita";
+                    return;
+                }
+
                 const lista = document.getElementById("lista-comentarios");
                 lista.innerHTML = "";
 
@@ -69,10 +75,6 @@
                     lista.appendChild(div);
                 });
 
-                // Verificar si la operación fue finalizada
-                if (data.length > 0 && data[0].estado_operacion === 'finalizada') {
-                    window.location.href = "/turnos-paciente";
-                }
             } catch (err) {
                 console.error("Error al actualizar comentarios", err);
             }
@@ -88,7 +90,6 @@
     <div class="titulo">🩺 Tu cita médica</div>
     <div class="dato"><strong>Tipo de operación:</strong> {{ operacion.tipo }}</div>
     <div class="dato"><strong>Doctor:</strong> Dr. {{ doctor.nombre }} {{ doctor.apellido }}</div>
-
 
     <div class="comentarios">
         <h3>📋 Instrucciones del doctor</h3>
