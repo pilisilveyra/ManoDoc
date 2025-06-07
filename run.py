@@ -14,16 +14,30 @@ def on_connect(client, userdata, flags, rc):
     print("MQTT conectado con código", rc)
     client.subscribe(TOPIC)
 
+from app.models.Operacion import Operacion
+from app.models.Temperatura import Temperatura
+from app.extensions import db
+
 def on_message(client, userdata, msg):
     try:
         valor = float(msg.payload.decode())
+
         with app.app_context():
+            # Buscar la operación en curso (solo una activa)
+            operacion = Operacion.query.filter_by(estado='en_curso').first()
+
             nueva = Temperatura(valor=valor)
+
+            if operacion:
+                nueva.id_operacion = operacion.id_operacion  # asociamos temperatura
+
             db.session.add(nueva)
             db.session.commit()
-        print("Temperatura guardada:", valor)
+            print(f"Temperatura guardada: {valor} (asociada a operación {operacion.id_operacion if operacion else 'ninguna'})")
+
     except Exception as e:
         print("Error al guardar temperatura:", e)
+
 
 def iniciar_mqtt():
     client = mqtt.Client()

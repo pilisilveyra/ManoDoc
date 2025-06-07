@@ -88,7 +88,14 @@ def create_app():
                 db.session.add(op)
                 db.session.commit()
 
-            return render_template('ver_cita.html', operacion=op)
+            if tipo == 'doctor':
+                return render_template("ver_cita_doctor.html", operacion=op, paciente=turno.paciente)
+            else:
+                comentarios = ComentarioDoctor.query.filter_by(
+                    id_operacion=op.id_operacion
+                ).order_by(ComentarioDoctor.timestamp.desc()).all()
+                return render_template("ver_cita_paciente.html", operacion=op, doctor=turno.doctor,
+                                       comentarios=comentarios)
 
         return render_template('ver_cita_esperando.html')
 

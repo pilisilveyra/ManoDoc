@@ -86,18 +86,6 @@
         </form>
     </div>
 
-    <div class="seccion">
-    <h3>⚙️ Control de operación</h3>
-    <form method="POST">
-        <select name="nuevo_estado">
-            <option value="en_curso" {% if operacion.estado == 'en_curso' %}selected{% endif %}>En curso</option>
-            <option value="en_pausa" {% if operacion.estado == 'en_pausa' %}selected{% endif %}>Pausada</option>
-            <option value="finalizada">Finalizar operación</option>
-        </select>
-        <button type="submit">Actualizar estado</button>
-    </form>
-</div>
-
 </div>
 </body>
 </html>
