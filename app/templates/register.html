@@ -21,6 +21,13 @@
 <body>
     <div class="form-container">
         <h2>Registrarse</h2>
+        {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div style="background: #fdd; padding: 10px; border-radius: 6px; margin-bottom: 15px; color: #900;">
+      {{ messages[0] }}
+    </div>
+  {% endif %}
+{% endwith %}
         <label for="tipo_usuario">Registrarse como:</label>
         <select id="tipo_usuario" onchange="toggleForm()">
             <option value="">Seleccione...</option>
