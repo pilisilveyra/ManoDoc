@@ -30,7 +30,8 @@ def turnos_doctor():
         from datetime import datetime
         turnos = Turno.query.filter(
             Turno.id_doctor == id_doctor,
-            db.func.concat(Turno.fecha, ' ', Turno.hora) >= datetime.now()
+            db.func.concat(Turno.fecha, ' ', Turno.hora) >= datetime.now(),
+            Turno.operacion is None or Turno.operacion.estado != 'finalizada'
         ).all()
         return render_template('turnos-doctor.html', turnos=turnos, active_page='turnos')
     return redirect(url_for('login_bp.login'))
@@ -90,3 +91,12 @@ def guardar_comentario():
     db.session.commit()
 
     return redirect(url_for('ver_cita'))
+
+@doctor_bp.route('/finalizar-operacion', methods=['POST'])
+def finalizar_operacion():
+    op_id = request.form.get('id_operacion')
+    operacion = Operacion.query.get_or_404(op_id)
+    operacion.estado = 'finalizada'
+    db.session.commit()
+    return redirect(url_for('ver_cita'))
+

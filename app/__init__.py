@@ -83,10 +83,14 @@ def create_app():
                 op = Operacion(
                     tipo=turno.tipo_operacion,
                     id_paciente=turno.id_paciente,
-                    id_doctor=turno.id_doctor
+                    id_doctor=turno.id_doctor,
+                    id_turno=turno.id_turno
                 )
                 db.session.add(op)
                 db.session.commit()
+
+            if op.estado == 'finalizada':
+                return render_template("ver_cita_finalizada.html")  # página con el mensaje y botón para salir
 
             if tipo == 'doctor':
                 return render_template("ver_cita_doctor.html", operacion=op, paciente=turno.paciente)

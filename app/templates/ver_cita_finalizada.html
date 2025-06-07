@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Operación finalizada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0fdf4;
+            color: #2f855a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .card h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .card p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .card form button {
+            background-color: #2f855a;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .card form button:hover {
+            background-color: #276749;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🟢 La operación ha finalizado</h1>
+        <p>Podés salir y volver a tus turnos.</p>
+        <form method="GET" action="{% if session['tipo'] == 'doctor' %}{{ url_for('doctor_bp.turnos_doctor') }}{% else %}{{ url_for('paciente_bp.turnos_paciente') }}{% endif %}">
+            <button type="submit">Salir</button>
+        </form>
+    </div>
+</body>
+</html>
