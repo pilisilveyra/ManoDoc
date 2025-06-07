@@ -51,11 +51,14 @@ def create_app():
             return dict(doctor=doctor)
         return {}
 
-
     @app.route('/')
     def index():
+        if 'usuario_id' in session:
+            if session.get('tipo') == 'paciente':
+                return redirect(url_for('paciente_bp.home_paciente'))
+            elif session.get('tipo') == 'doctor':
+                return redirect(url_for('doctor_bp.turnos_doctor'))
         return render_template('login.html')
-
 
     import paho.mqtt.publish as publish
     @app.route('/ver-cita')
