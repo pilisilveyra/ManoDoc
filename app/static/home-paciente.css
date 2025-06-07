@@ -1,98 +1,51 @@
-/* Estructura general */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-    margin: 0;
-    padding: 0;
-}
-
+/* home-paciente.css */
 .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  padding: 3rem;
+  flex-wrap: wrap;
+  background: linear-gradient(to bottom right, #f0f4f8, #e6f7f7);
 }
 
-/* Imagen + descripción */
 .imagen-descripcion {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.main-image {
-    max-width: 500px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  flex: 1;
+  max-width: 600px;
 }
 
 .descripcion-boton {
-    max-width: 400px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-top: 20px;
 }
 
 .descripcion {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 1rem;
+  color: #2d3748;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 .boton-turno {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    background-color: #2d6a4f;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+  display: inline-block;
+  margin-top: 20px;
+  background-color: #2d6a4f;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
 .boton-turno:hover {
-    background-color: #1b4332;
+  background-color: #1b4332;
 }
 
-/* Cards de doctores */
 .profesionales-section {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.card-profesional {
-    background-color: #ffffff;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;
-    width: 180px;
-    transition: transform 0.2s ease;
-}
-
-.card-profesional:hover {
-    transform: translateY(-5px);
-}
-
-.card-profesional img.foto-doctor {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-}
-
-.card-profesional h3 {
-    font-size: 1rem;
-    margin: 0.2rem 0;
-    color: #1b4332;
-    text-transform: capitalize;
-}
-
-.card-profesional p {
-    font-size: 0.9rem;
-    color: #555;
-    margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }

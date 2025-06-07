@@ -1,18 +1,15 @@
-/* Estilo base para la barra */
+/* navbar.css */
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f8f9f8;
-  padding: 10px 30px;
-  border-bottom: 1px solid #d9e0dc;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Logo */
-.logo {
-  display: flex;
-  align-items: center;
+  background-color: #e0f0ee; /* gris con tinte turquesa */
+  padding: 12px 30px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
 .logo img {
@@ -21,12 +18,11 @@
 }
 
 .brand {
-  font-size: 1.5rem;
-  color: #2b7a78;
+  font-size: 1.6rem;
+  color: #007f7f;
   font-weight: bold;
 }
 
-/* Links */
 .navbar-links {
   display: flex;
   gap: 25px;
@@ -34,7 +30,7 @@
 
 .navbar-links a {
   text-decoration: none;
-  color: #00b8b8; /* Turquesa */
+  color: #007f7f;
   font-size: 1rem;
   font-weight: 500;
   transition: all 0.2s;
@@ -42,8 +38,7 @@
 
 .navbar-links a:hover,
 .navbar-links a.active {
-  color: #007f7f;
-  font-weight: bold;
-  border-bottom: 2px solid #007f7f;
-  padding-bottom: 2px;
+  color: #045f5f;
+  border-bottom: 2px solid #045f5f;
+  padding-bottom: 3px;
 }

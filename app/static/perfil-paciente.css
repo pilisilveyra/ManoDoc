@@ -55,11 +55,16 @@
 }
 
 .cerrar-sesion a {
-    color: #555;
-    text-decoration: none;
-    font-weight: bold;
+  display: inline-block;
+  background-color: #007f7f;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .cerrar-sesion a:hover {
-    color: #000;
+  background-color: #045f5f;
 }
