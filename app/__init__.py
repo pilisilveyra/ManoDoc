@@ -62,9 +62,11 @@ def create_app():
         if not turno_id:
             return redirect(url_for('index'))
 
-        turno = Turno.query.get_or_404(turno_id)
+        db.session.expire_all()
+        turno = db.session.query(Turno).filter_by(id_turno=turno_id).first()
 
         tipo = session.get('tipo')
+
 
         if turno.doctor_ingreso and turno.paciente_ingreso:
             op = Operacion.query.filter_by(id_turno=turno.id_turno).first()
@@ -100,9 +102,9 @@ def create_app():
             return {"en_curso": False}
 
         from app.models.Turno import Turno
+        db.session.expire_all()
         turno = db.session.query(Turno).filter_by(id_turno=turno_id).first()
 
-        db.session.refresh(turno)  # fuerza a recargar desde la base
 
         return {"en_curso": bool(turno and turno.paciente_ingreso and turno.doctor_ingreso)}
 
