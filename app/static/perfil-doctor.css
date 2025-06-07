@@ -7,6 +7,7 @@ body {
 }
 /* Contenedor principal */
 .perfil-container {
+    padding-top: 40px;
     max-width: 650px;
     margin: auto;
     background-color: #ffffff;
