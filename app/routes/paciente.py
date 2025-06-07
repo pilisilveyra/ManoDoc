@@ -34,16 +34,12 @@ def turnos_paciente():
 
         ahora = datetime.now()
 
+        turnos = Turno.query.filter_by(id_paciente=paciente.id_paciente).all()
 
-        turnos = Turno.query.filter(
-            Turno.id_paciente == paciente.id_paciente,
-            Turno.operacion is None or Turno.operacion.estado != 'finalizada'
-        ).all()
-
-        # Filtrar solo los futuros (fecha y hora juntos)
         turnos_futuros = [
-            turno for turno in turnos
-            if datetime.combine(turno.fecha, turno.hora) >= ahora
+            t for t in turnos
+            if datetime.combine(t.fecha, t.hora) >= ahora
+               and (not t.operacion or t.operacion.estado != 'finalizada')
         ]
 
         doctores = Doctor.query.all()

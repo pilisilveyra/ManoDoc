@@ -28,12 +28,15 @@ def turnos_doctor():
     if 'usuario_id' in session and session.get('tipo') == 'doctor':
         id_doctor = session['usuario_id']
         from datetime import datetime
-        turnos = Turno.query.filter(
-            Turno.id_doctor == id_doctor,
-            db.func.concat(Turno.fecha, ' ', Turno.hora) >= datetime.now(),
-            Turno.operacion is None or Turno.operacion.estado != 'finalizada'
-        ).all()
-        return render_template('turnos-doctor.html', turnos=turnos, active_page='turnos')
+        ahora = datetime.now()
+        turnos = Turno.query.filter_by(id_doctor=id_doctor).all()
+
+        turnos_futuros = [
+            t for t in turnos
+            if datetime.combine(t.fecha, t.hora) >= ahora
+               and (not t.operacion or t.operacion.estado != 'finalizada')
+        ]
+        return render_template('turnos-doctor.html', turnos=turnos_futuros, active_page='turnos')
     return redirect(url_for('login_bp.login'))
 
 @doctor_bp.route('/turnos/<int:id_turno>/cancelar', methods=['POST'])
