@@ -58,7 +58,7 @@ def perfil_doctor():
         return render_template('perfil-doctor.html', doctor=doctor, active_page='perfil')
     return redirect(url_for('login_bp.login'))
 
-@doctor_bp.route('/turnos/<int:id_turno>/ingresar')
+@doctor_bp.route('/doctor/turnos/<int:id_turno>/ingresar')
 def ingresar_turno_doctor(id_turno):
     turno = Turno.query.get_or_404(id_turno)
     turno.doctor_ingreso = True
