@@ -79,12 +79,14 @@
     </div>
 
     <div class="seccion comentarios">
-        <h3>✍️ Instrucciones al paciente</h3>
-        <form method="POST">
-            <textarea name="comentario" placeholder="Dejar indicaccion"></textarea>
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
+    <h3>✍️ Instrucciones al paciente</h3>
+    <form method="POST" action="/comentarios">
+        <input type="hidden" name="id_operacion" value="{{ operacion.id_operacion }}">
+        <textarea name="comentario" placeholder="Dejar indicación"></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
 
 </div>
 </body>

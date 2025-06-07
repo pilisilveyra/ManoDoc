@@ -61,3 +61,35 @@ def ingresar_turno_doctor(id_turno):
     db.session.commit()
     session['turno_en_curso'] = id_turno
     return redirect(url_for('ver_cita'))
+
+from flask import request, jsonify
+from app.models.ComentarioDoctor import ComentarioDoctor
+from app.models.Operacion import Operacion
+from app.extensions import db
+from datetime import datetime
+
+@doctor_bp.route('/comentarios', methods=['POST'])
+def guardar_comentario():
+    if 'usuario_id' not in session or session.get('tipo') != 'doctor':
+        return jsonify({"error": "No autorizado"}), 403
+
+    id_operacion = request.form.get('id_operacion', type=int)
+    contenido = request.form.get('comentario', type=str)
+
+    if not id_operacion or not contenido:
+        return jsonify({"error": "Faltan datos"}), 400
+
+    operacion = Operacion.query.get(id_operacion)
+    if not operacion or operacion.estado != 'en_curso':
+        return jsonify({"error": "Operación no válida"}), 400
+
+    comentario = ComentarioDoctor(
+        id_operacion=id_operacion,
+        contenido=contenido,
+        timestamp=datetime.now()
+    )
+
+    db.session.add(comentario)
+    db.session.commit()
+
+    return jsonify({"success": True})
