@@ -8,9 +8,9 @@ body {
 
 /* Contenedor principal */
 .perfil-container {
-    padding-top: 40px;
+    margin: 80px auto 40px;       /* 🟢 Aleja del navbar (80px), y tiene espacio abajo */
+    padding: 3rem 2rem;           /* 🟢 Espacio interno cómodo */
     max-width: 650px;
-    margin: auto;
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
