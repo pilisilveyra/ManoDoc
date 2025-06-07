@@ -90,19 +90,3 @@ def guardar_comentario():
     db.session.commit()
 
     return redirect(url_for('ver_cita'))
-
-@doctor_bp.route('/operacion/<int:id_operacion>/estado', methods=['POST'])
-def cambiar_estado_operacion(id_operacion):
-    if 'usuario_id' not in session or session.get('tipo') != 'doctor':
-        return redirect(url_for('login_bp.login'))
-
-    nuevo_estado = request.form.get("estado")  # "pausa", "en_curso", "finalizada"
-    operacion = Operacion.query.get_or_404(id_operacion)
-
-    if nuevo_estado not in ['en_curso', 'pausa', 'finalizada']:
-        flash("Estado inválido")
-        return redirect(url_for('ver_cita'))
-
-    operacion.estado = nuevo_estado
-    db.session.commit()
-    return redirect(url_for('ver_cita'))
