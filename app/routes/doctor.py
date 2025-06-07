@@ -64,6 +64,7 @@ def ingresar_turno_doctor(id_turno):
     turno.doctor_ingreso = True
     db.session.commit()
     session['turno_en_curso'] = id_turno
+    print(session.get('tipo'))
     return redirect(url_for('ver_cita'))
 
 from flask import request, jsonify
