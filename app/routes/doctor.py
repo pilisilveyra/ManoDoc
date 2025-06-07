@@ -68,28 +68,25 @@ from app.models.Operacion import Operacion
 from app.extensions import db
 from datetime import datetime
 
+from flask import redirect, url_for
+
 @doctor_bp.route('/comentarios', methods=['POST'])
 def guardar_comentario():
     if 'usuario_id' not in session or session.get('tipo') != 'doctor':
-        return jsonify({"error": "No autorizado"}), 403
+        return redirect(url_for('login_bp.login'))
 
     id_operacion = request.form.get('id_operacion', type=int)
     contenido = request.form.get('comentario', type=str)
 
     if not id_operacion or not contenido:
-        return jsonify({"error": "Faltan datos"}), 400
-
-    operacion = Operacion.query.get(id_operacion)
-    if not operacion or operacion.estado != 'en_curso':
-        return jsonify({"error": "Operación no válida"}), 400
+        flash("Faltan datos para guardar el comentario")
+        return redirect(url_for('ver_cita'))
 
     comentario = ComentarioDoctor(
         id_operacion=id_operacion,
         contenido=contenido,
-        timestamp=datetime.now()
     )
-
     db.session.add(comentario)
     db.session.commit()
 
-    return jsonify({"success": True})
+    return redirect(url_for('ver_cita'))
