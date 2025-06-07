@@ -29,6 +29,7 @@ from datetime import datetime, date, time
 
 @paciente_bp.route('/turnos-paciente')
 def turnos_paciente():
+    print(session.get('usuario_id'), session.get('tipo'))
     if 'usuario_id' in session and session['tipo'] == 'paciente':
         paciente = Paciente.query.get(session['usuario_id'])
 
