@@ -81,12 +81,27 @@
         setInterval(actualizarComentarios, 3000);
         window.onload = actualizarComentarios;
     </script>
+    <script>
+    async function verificarEstadoOperacion() {
+        const res = await fetch("/operacion/{{ operacion.id_operacion }}/estado-actual");
+        const data = await res.json();
+        if (data.estado === "finalizada") {
+            window.location.href = "/turnos-paciente";
+        }
+    }
+
+    setInterval(verificarEstadoOperacion, 3000);
+    window.onload = verificarEstadoOperacion;
+</script>
+
 </head>
 <body>
 <div class="contenedor">
     <div class="titulo">🩺 Tu cita médica</div>
     <div class="dato"><strong>Tipo de operación:</strong> {{ operacion.tipo }}</div>
     <div class="dato"><strong>Doctor:</strong> Dr. {{ doctor.nombre }} {{ doctor.apellido }}</div>
+    <div class="dato"><strong>Estado actual:</strong> {{ operacion.estado | capitalize }}</div>
+
 
     <div class="comentarios">
         <h3>📋 Instrucciones del doctor</h3>

@@ -122,5 +122,10 @@ def create_app():
     def mano():
         return render_template('mano.html')
 
+    @app.route('/operacion/<int:id_operacion>/estado-actual')
+    def obtener_estado_operacion(id_operacion):
+        operacion = Operacion.query.get_or_404(id_operacion)
+        return jsonify({"estado": operacion.estado})
+
     return app
 

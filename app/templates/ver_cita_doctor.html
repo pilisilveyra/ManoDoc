@@ -63,12 +63,26 @@
         setInterval(cargarTemperaturas, 3000); // refresca cada 3s
         window.onload = cargarTemperaturas;
     </script>
+    <script>
+    async function verificarEstadoOperacion() {
+        const res = await fetch("/operacion/{{ operacion.id_operacion }}/estado-actual");
+        const data = await res.json();
+        if (data.estado === "finalizada") {
+            window.location.href = "/turnos-doctor";
+        }
+    }
+
+    setInterval(verificarEstadoOperacion, 3000);
+    window.onload = verificarEstadoOperacion;
+</script>
 </head>
 <body>
 <div class="contenedor">
     <div class="titulo">🩺 Cita en curso</div>
     <div class="dato"><strong>Tipo de operación:</strong> {{ operacion.tipo }}</div>
     <div class="dato"><strong>Paciente:</strong> {{ paciente.nombre }} {{ paciente.apellido }}</div>
+    <div class="dato"><strong>Estado actual:</strong> {{ operacion.estado | capitalize }}</div>
+
 
 
     <div class="seccion temperaturas">
@@ -86,6 +100,16 @@
         <button type="submit">Enviar</button>
     </form>
 </div>
+
+    <form method="POST" action="/operacion/{{ operacion.id_operacion }}/estado">
+    <select name="estado">
+        <option value="en_curso" {% if operacion.estado == 'en_curso' %}selected{% endif %}>En curso</option>
+        <option value="pausa" {% if operacion.estado == 'pausa' %}selected{% endif %}>Pausa</option>
+        <option value="finalizada" {% if operacion.estado == 'finalizada' %}selected{% endif %}>Finalizada</option>
+    </select>
+    <button type="submit">Cambiar estado</button>
+</form>
+
 
 
 </div>
