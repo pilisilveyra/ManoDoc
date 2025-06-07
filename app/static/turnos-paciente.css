@@ -1,10 +1,25 @@
-.turnos-container {
+/* Fondo general y tipografía */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e7f5f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal centrado */
+.main-container {
+    max-width: 1100px;
+    margin: 60px auto 40px auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
     display: flex;
     justify-content: space-between;
-    padding: 2rem;
     gap: 2rem;
 }
 
+/* Sección de turnos */
 .proximos-turnos {
     width: 60%;
 }
@@ -12,18 +27,20 @@
 .proximos-turnos h2 {
     background-color: #2d6a4f;
     color: white;
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1rem;
     border-radius: 12px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     text-align: center;
+    margin-bottom: 1rem;
 }
 
+/* Card de turno */
 .turno-card {
     background-color: white;
     border-left: 6px solid #2d6a4f;
     border-radius: 12px;
     padding: 1rem;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
@@ -35,16 +52,17 @@
 
 .nombre-paciente {
     font-weight: bold;
-    color: #333;
+    color: #1b4332;
 }
 
 .modo {
-    background-color: #eaf4f1;
+    background-color: #d8f3dc;
     border-radius: 8px;
-    padding: 0.2rem 0.5rem;
+    padding: 0.3rem 0.6rem;
     font-size: 0.8rem;
 }
 
+/* Información */
 .doctor-info {
     color: #1b4332;
     margin-bottom: 0.5rem;
@@ -58,6 +76,7 @@
     margin-bottom: 0.5rem;
 }
 
+/* Botones */
 .botones {
     display: flex;
     gap: 1rem;
@@ -65,16 +84,22 @@
 
 .btn-cancelar,
 .btn-ingresar {
-    padding: 0.4rem 1rem;
+    padding: 0.5rem 1.2rem;
     border: none;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
 }
 
 .btn-cancelar {
     background-color: #e63946;
     color: white;
+}
+
+.btn-cancelar:hover {
+    background-color: #c91d2e;
 }
 
 .btn-ingresar {
@@ -84,6 +109,11 @@
     display: inline-block;
 }
 
+.btn-ingresar:hover {
+    background-color: #1b4332;
+}
+
+/* Panel lateral */
 .panel-lateral {
     width: 35%;
     text-align: center;
@@ -91,7 +121,7 @@
 
 .btn-nuevo-turno {
     display: inline-block;
-    background-color: #2d6a4f;
+    background-color: #007f7f;
     color: white;
     padding: 1rem 2rem;
     border-radius: 50px;
@@ -99,8 +129,14 @@
     text-decoration: none;
     font-weight: bold;
     margin-bottom: 2rem;
+    transition: background-color 0.3s ease;
 }
 
+.btn-nuevo-turno:hover {
+    background-color: #045f5f;
+}
+
+/* Cards de doctores */
 .doctores-disponibles {
     display: flex;
     justify-content: center;

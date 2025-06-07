@@ -1,16 +1,19 @@
-/* Estructura general */
+/* Fondo general */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e7f5f4;
     margin: 0;
     padding: 0;
 }
 
+/* Contenedor principal */
 .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
+    max-width: 1100px;
+    margin: 60px auto 40px auto;
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
 /* Imagen + descripción */
@@ -18,25 +21,26 @@ body {
     display: flex;
     flex-direction: row;
     gap: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     align-items: center;
     flex-wrap: wrap;
 }
 
 .main-image {
-    max-width: 500px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    max-width: 480px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .descripcion-boton {
-    max-width: 400px;
+    max-width: 500px;
 }
 
 .descripcion {
     font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 1rem;
+    color: #2d3748;
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
 }
 
 .boton-turno {
@@ -47,6 +51,7 @@ body {
     text-decoration: none;
     border-radius: 8px;
     font-weight: bold;
+    font-size: 1rem;
     transition: background-color 0.3s ease;
 }
 
@@ -57,23 +62,23 @@ body {
 /* Cards de doctores */
 .profesionales-section {
     display: flex;
-    gap: 1.5rem;
     flex-wrap: wrap;
+    gap: 1.5rem;
     justify-content: center;
 }
 
 .card-profesional {
     background-color: #ffffff;
     padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     text-align: center;
     width: 180px;
     transition: transform 0.2s ease;
 }
 
 .card-profesional:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
 }
 
 .card-profesional img.foto-doctor {
@@ -81,11 +86,11 @@ body {
     height: 180px;
     object-fit: cover;
     border-radius: 8px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.7rem;
 }
 
 .card-profesional h3 {
-    font-size: 1rem;
+    font-size: 1.05rem;
     margin: 0.2rem 0;
     color: #1b4332;
     text-transform: capitalize;

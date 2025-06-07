@@ -1,13 +1,22 @@
-.turnos-container {
-    display: flex;
-    justify-content: center;
+/* Fondo general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e7f5f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.main-container {
+    max-width: 1000px;
+    margin: 60px auto 40px auto;
+    background-color: white;
+    border-radius: 20px;
     padding: 2rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-.proximos-turnos {
-    width: 80%;
-}
-
+/* Título */
 .proximos-turnos h2 {
     background-color: #2d6a4f;
     color: white;
@@ -15,9 +24,10 @@
     border-radius: 12px;
     font-size: 1.4rem;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
+/* Card de turno */
 .turno-card {
     background-color: white;
     border-left: 6px solid #2d6a4f;
@@ -27,6 +37,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Encabezado */
 .turno-header {
     display: flex;
     justify-content: space-between;
@@ -47,6 +58,7 @@
     font-size: 0.8rem;
 }
 
+/* Info adicional */
 .doctor-info {
     font-size: 0.95rem;
     color: #333;
@@ -63,6 +75,7 @@
     color: #2d6a4f;
 }
 
+/* Botones */
 .botones {
     display: flex;
     gap: 1rem;
