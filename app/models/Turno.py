@@ -19,3 +19,5 @@ class Turno(db.Model):
     paciente = db.relationship('Paciente', backref=db.backref('turnos', lazy=True))
     doctor = db.relationship('Doctor', backref=db.backref('turnos', lazy=True))
 
+    operacion = db.relationship("Operacion", uselist=False, backref="turno", lazy=True)
+
