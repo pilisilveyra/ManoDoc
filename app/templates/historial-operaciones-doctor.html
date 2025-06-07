@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Historial del Paciente</title>
+    <title>Historial del Doctor</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #edf2f7;
+            background-color: #f7fafc;
             color: #2d3748;
             margin: 0;
             padding: 40px;
@@ -30,7 +30,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .card-header h3 {
@@ -83,26 +82,35 @@
 </head>
 <body>
 
-<h1>📋 Historial de tus turnos</h1>
+<h1>📊 Historial de operaciones realizadas</h1>
 
 {% for op in operaciones %}
 <div class="card">
     <div class="card-header">
         <h3>{{ op.tipo }} - {{ op.inicio.strftime('%d/%m/%Y %H:%M') }}</h3>
-        <span>Doctor: Dr. {{ op.doctor.nombre }} {{ op.doctor.apellido }}</span>
+        <span>Paciente: {{ op.paciente.nombre }} {{ op.paciente.apellido }}</span>
     </div>
 
     <button class="btn-detalles" onclick="toggleDetalles({{ op.id_operacion }})">
-        Ver comentarios
+        Ver detalles
     </button>
 
     <div class="detalles" id="detalles-{{ op.id_operacion }}">
-        <h4>📝 Comentarios recibidos:</h4>
+        <h4>📈 Temperaturas registradas:</h4>
         <ul>
-            {% for comentario in op.comentarios %}
-                <li>{{ comentario.timestamp.strftime('%H:%M') }} - {{ comentario.contenido }}</li>
+            {% for t in op.temperaturas %}
+                <li>{{ t.timestamp.strftime('%H:%M') }} - {{ t.valor }}°C</li>
             {% else %}
-                <li>No se dejaron comentarios durante esta operación.</li>
+                <li>No se registraron temperaturas.</li>
+            {% endfor %}
+        </ul>
+
+        <h4>📝 Comentarios enviados:</h4>
+        <ul>
+            {% for c in op.comentarios %}
+                <li>{{ c.timestamp.strftime('%H:%M') }} - {{ c.contenido }}</li>
+            {% else %}
+                <li>No se dejaron comentarios.</li>
             {% endfor %}
         </ul>
     </div>

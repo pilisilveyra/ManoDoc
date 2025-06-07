@@ -20,10 +20,17 @@ def home_paciente():
     else:
         return render_template('login.html')
 
-
 @paciente_bp.route('/historial-paciente')
 def historial_paciente():
-    return render_template('historial-paciente.html')
+    if 'usuario_id' in session and session['tipo'] == 'paciente':
+        paciente = Paciente.query.get(session['usuario_id'])
+
+        # Buscamos operaciones finalizadas asociadas a sus turnos
+        operaciones = Operacion.query.filter_by(id_paciente=paciente.id_paciente, estado='finalizada').order_by(Operacion.inicio.desc()).all()
+
+        return render_template('historial-paciente.html', paciente=paciente, operaciones=operaciones, active_page='historial')
+    return redirect(url_for('login_bp.login'))
+
 
 from datetime import datetime, date, time
 

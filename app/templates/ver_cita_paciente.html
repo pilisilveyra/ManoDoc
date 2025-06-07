@@ -59,15 +59,23 @@
                 const res = await fetch("/comentarios?id_operacion={{ operacion.id_operacion }}");
                 const data = await res.json();
 
-                // 🔁 Si la operación fue finalizada, redirigimos
-                if (data.length > 0 && data[0].estado_operacion === "finalizada") {
-                    window.location.href = "/ver-cita";
-                    return;
+                if (data.length > 0) {
+                    const estado = data[0].estado_operacion;
+
+                    // ⛔ Redirigir si finalizó
+                    if (estado === "finalizada") {
+                        window.location.href = "/ver-cita";
+                        return;
+                    }
+
+                    // ✅ Actualizar visual del estado
+                    const estadoDiv = document.getElementById("estado-operacion");
+                    estadoDiv.textContent = estado === "pausa" ? "⏸️ En pausa" : "▶️ En curso";
                 }
 
+                // ✅ Actualizar comentarios
                 const lista = document.getElementById("lista-comentarios");
                 lista.innerHTML = "";
-
                 data.forEach(com => {
                     const div = document.createElement("div");
                     div.className = "comentario";
@@ -83,13 +91,22 @@
         setInterval(actualizarComentarios, 3000);
         window.onload = actualizarComentarios;
     </script>
-
 </head>
 <body>
 <div class="contenedor">
     <div class="titulo">🩺 Tu cita médica</div>
+
     <div class="dato"><strong>Tipo de operación:</strong> {{ operacion.tipo }}</div>
     <div class="dato"><strong>Doctor:</strong> Dr. {{ doctor.nombre }} {{ doctor.apellido }}</div>
+    <div class="dato"><strong>Estado de la operación:</strong>
+        <span id="estado-operacion">
+            {% if operacion.estado == 'pausa' %}
+                ⏸️ En pausa
+            {% elif operacion.estado == 'en_curso' %}
+                ▶️ En curso
+            {% endif %}
+        </span>
+    </div>
 
     <div class="comentarios">
         <h3>📋 Instrucciones del doctor</h3>

@@ -49,7 +49,13 @@ def cancelar_turno_doctor(id_turno):
 
 @doctor_bp.route('/historial-operaciones')
 def historial_operaciones():
-    return render_template('historial-operaciones-doctor.html', active_page='historial')
+    if 'usuario_id' in session and session['tipo'] == 'doctor':
+        doctor = Doctor.query.get(session['usuario_id'])
+
+        operaciones = Operacion.query.filter_by(id_doctor=doctor.id_doctor, estado='finalizada').order_by(Operacion.inicio.desc()).all()
+
+        return render_template('historial-operaciones-doctor.html', doctor=doctor, operaciones=operaciones, active_page='historial')
+    return redirect(url_for('login_bp.login'))
 
 @doctor_bp.route('/perfil-doctor')
 def perfil_doctor():
@@ -101,6 +107,16 @@ def finalizar_operacion():
     op_id = request.form.get('id_operacion')
     operacion = Operacion.query.get_or_404(op_id)
     operacion.estado = 'finalizada'
+    db.session.commit()
+    return redirect(url_for('ver_cita'))
+
+@doctor_bp.route('/operacion/<int:id_operacion>/toggle-estado', methods=['POST'])
+def toggle_estado_operacion(id_operacion):
+    op = Operacion.query.get_or_404(id_operacion)
+    if op.estado == 'en_curso':
+        op.estado = 'pausa'
+    elif op.estado == 'pausa':
+        op.estado = 'en_curso'
     db.session.commit()
     return redirect(url_for('ver_cita'))
 

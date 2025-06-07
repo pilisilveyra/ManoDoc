@@ -20,6 +20,10 @@
             margin-bottom: 10px;
             color: #2f855a;
         }
+        .dato {
+            margin: 10px 0;
+            font-size: 18px;
+        }
         .seccion {
             margin-top: 30px;
         }
@@ -45,6 +49,30 @@
             border: none;
             border-radius: 5px;
         }
+        .boton-toggle-estado {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .boton-toggle-estado:hover {
+            transform: scale(1.02);
+        }
+
+        .boton-toggle-estado.pausa {
+            background-color: #dd6b20; /* naranja */
+        }
+
+        .boton-toggle-estado.reanudar {
+            background-color: #2f855a; /* verde */
+        }
     </style>
     <script>
         async function cargarTemperaturas() {
@@ -67,10 +95,18 @@
 <body>
 <div class="contenedor">
     <div class="titulo">🩺 Cita en curso</div>
+
     <div class="dato"><strong>Tipo de operación:</strong> {{ operacion.tipo }}</div>
     <div class="dato"><strong>Paciente:</strong> {{ paciente.nombre }} {{ paciente.apellido }}</div>
 
-
+    <div class="dato">
+        <strong>Estado actual:</strong>
+        {% if operacion.estado == 'en_curso' %}
+            <span style="color: green;">🟢 En curso</span>
+        {% elif operacion.estado == 'pausa' %}
+            <span style="color: orange;">⏸️ En pausa</span>
+        {% endif %}
+    </div>
 
     <div class="seccion temperaturas">
         <h3>📈 Temperaturas en tiempo real</h3>
@@ -80,22 +116,28 @@
     </div>
 
     <div class="seccion comentarios">
-    <h3>✍️ Instrucciones al paciente</h3>
-    <form method="POST" action="/comentarios">
-        <input type="hidden" name="id_operacion" value="{{ operacion.id_operacion }}">
-        <textarea name="comentario" placeholder="Dejar indicación"></textarea>
-        <button type="submit">Enviar</button>
+        <h3>✍️ Instrucciones al paciente</h3>
+        <form method="POST" action="/comentarios">
+            <input type="hidden" name="id_operacion" value="{{ operacion.id_operacion }}">
+            <textarea name="comentario" placeholder="Dejar indicación"></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <form method="POST" action="/operacion/{{ operacion.id_operacion }}/toggle-estado">
+        <button type="submit" class="boton-toggle-estado {% if operacion.estado == 'en_curso' %}pausa{% else %}reanudar{% endif %}">
+            {% if operacion.estado == 'en_curso' %}
+                ⏸️ Pausar operación
+            {% elif operacion.estado == 'pausa' %}
+                ▶️ Reanudar operación
+            {% endif %}
+        </button>
     </form>
-</div>
 
     <form method="POST" action="/finalizar-operacion">
-    <input type="hidden" name="id_operacion" value="{{ operacion.id_operacion }}">
-    <button type="submit">Finalizar operación</button>
-</form>
-
-
-
-
+        <input type="hidden" name="id_operacion" value="{{ operacion.id_operacion }}">
+        <button type="submit">Finalizar operación</button>
+    </form>
 </div>
 </body>
 </html>
