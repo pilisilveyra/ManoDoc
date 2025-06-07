@@ -5,7 +5,7 @@ class Operacion(db.Model):
     __tablename__ = 'operaciones'
 
     id_operacion = db.Column(db.Integer, primary_key=True)
-    estado = db.Column(db.String(50), nullable=False, default='en_curso')  # en_curso, pausa, finalizada
+    estado = db.Column(db.String(50), nullable=False, default='en_curso')
     tipo = db.Column(db.String(100), nullable=False)
     inicio = db.Column(db.DateTime, default=datetime.utcnow)
     fin = db.Column(db.DateTime)
