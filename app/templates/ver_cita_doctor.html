@@ -109,6 +109,44 @@
         .boton-toggle-estado.reanudar {
             background-color: #2d6a4f;
         }
+        .botones-operacion {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.boton-toggle-estado,
+.boton-finalizar {
+    padding: 0.8rem 1.6rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.boton-toggle-estado.pausa {
+    background-color: #dd6b20; /* naranja */
+}
+
+.boton-toggle-estado.reanudar {
+    background-color: #2d6a4f; /* verde */
+}
+
+.boton-finalizar {
+    background-color: #1b4332;
+}
+
+.boton-toggle-estado:hover,
+.boton-finalizar:hover {
+    transform: scale(1.03);
+    filter: brightness(1.1);
+}
+
     </style>
     <script>
         async function cargarTemperaturas() {
@@ -160,6 +198,7 @@
         </form>
     </div>
 
+    <div class="botones-operacion">
     <form method="POST" action="/operacion/{{ operacion.id_operacion }}/toggle-estado">
         <button type="submit" class="boton-toggle-estado {% if operacion.estado == 'en_curso' %}pausa{% else %}reanudar{% endif %}">
             {% if operacion.estado == 'en_curso' %}
@@ -169,6 +208,13 @@
             {% endif %}
         </button>
     </form>
+
+    <form method="POST" action="/finalizar-operacion">
+        <input type="hidden" name="id_operacion" value="{{ operacion.id_operacion }}">
+        <button type="submit" class="boton-finalizar">Finalizar operación</button>
+    </form>
+</div>
+
 
     <form method="POST" action="/finalizar-operacion">
         <input type="hidden" name="id_operacion" value="{{ operacion.id_operacion }}">
